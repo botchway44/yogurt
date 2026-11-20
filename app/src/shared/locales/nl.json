@@ -747,5 +747,6 @@
   "{size} GB used by models you are not using": "{size} GB in beslag genomen door modellen die je niet gebruikt",
   "Delete unused models": "Ongebruikte modellen verwijderen",
   "Delete {size} GB": "{size} GB verwijderen",
-  "Freed {size} GB": "{size} GB vrijgemaakt"
+  "Freed {size} GB": "{size} GB vrijgemaakt",
+  "{icon} Already downloaded": "{icon} Al gedownload"
 }

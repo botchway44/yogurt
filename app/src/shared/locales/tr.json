@@ -735,5 +735,6 @@
   "{size} GB used by models you are not using": "Kullanmadığınız modeller {size} GB yer kaplıyor",
   "Delete unused models": "Kullanılmayan modelleri sil",
   "Delete {size} GB": "{size} GB sil",
-  "Freed {size} GB": "{size} GB boşaltıldı"
+  "Freed {size} GB": "{size} GB boşaltıldı",
+  "{icon} Already downloaded": "{icon} Zaten indirildi"
 }

@@ -757,5 +757,6 @@
   "{size} GB used by models you are not using": "{size} GB תפוסים על ידי מודלים שאינך משתמש בהם",
   "Delete unused models": "מחיקת מודלים שאינם בשימוש",
   "Delete {size} GB": "מחיקת {size} GB",
-  "Freed {size} GB": "{size} GB שוחררו"
+  "Freed {size} GB": "{size} GB שוחררו",
+  "{icon} Already downloaded": "{icon} כבר הורד"
 }

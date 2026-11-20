@@ -778,5 +778,6 @@
   "{size} GB used by models you are not using": "{size} GB zabírají modely, které nepoužíváte",
   "Delete unused models": "Smazat nepoužívané modely",
   "Delete {size} GB": "Smazat {size} GB",
-  "Freed {size} GB": "Uvolněno {size} GB"
+  "Freed {size} GB": "Uvolněno {size} GB",
+  "{icon} Already downloaded": "{icon} Již staženo"
 }

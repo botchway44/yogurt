@@ -705,5 +705,6 @@
   "{size} GB used by models you are not using": "{size} GB digunakan oleh model yang anda tidak gunakan",
   "Delete unused models": "Padam model yang tidak digunakan",
   "Delete {size} GB": "Padam {size} GB",
-  "Freed {size} GB": "{size} GB dibebaskan"
+  "Freed {size} GB": "{size} GB dibebaskan",
+  "{icon} Already downloaded": "{icon} Sudah dimuat turun"
 }

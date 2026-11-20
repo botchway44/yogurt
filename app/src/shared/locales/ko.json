@@ -705,5 +705,6 @@
   "{size} GB used by models you are not using": "사용하지 않는 모델이 {size} GB를 차지하고 있습니다",
   "Delete unused models": "사용하지 않는 모델 삭제",
   "Delete {size} GB": "{size} GB 삭제",
-  "Freed {size} GB": "{size} GB를 확보했습니다"
+  "Freed {size} GB": "{size} GB를 확보했습니다",
+  "{icon} Already downloaded": "{icon} 다운로드됨"
 }

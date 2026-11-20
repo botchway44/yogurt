@@ -747,5 +747,6 @@
   "{size} GB used by models you are not using": "{size} GB brukes av modeller du ikke bruker",
   "Delete unused models": "Slett ubrukte modeller",
   "Delete {size} GB": "Slett {size} GB",
-  "Freed {size} GB": "{size} GB frigjort"
+  "Freed {size} GB": "{size} GB frigjort",
+  "{icon} Already downloaded": "{icon} Allerede lastet ned"
 }

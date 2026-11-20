@@ -705,5 +705,6 @@
   "{size} GB used by models you are not using": "{size} GB đang bị các mô hình bạn không dùng chiếm",
   "Delete unused models": "Xóa các mô hình không dùng",
   "Delete {size} GB": "Xóa {size} GB",
-  "Freed {size} GB": "Đã giải phóng {size} GB"
+  "Freed {size} GB": "Đã giải phóng {size} GB",
+  "{icon} Already downloaded": "{icon} Đã tải xuống"
 }

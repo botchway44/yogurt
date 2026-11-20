@@ -750,5 +750,6 @@
   "{size} GB used by models you are not using": "{size} GB καταλαμβάνουν μοντέλα που δεν χρησιμοποιείτε",
   "Delete unused models": "Διαγραφή αχρησιμοποίητων μοντέλων",
   "Delete {size} GB": "Διαγραφή {size} GB",
-  "Freed {size} GB": "Ελευθερώθηκαν {size} GB"
+  "Freed {size} GB": "Ελευθερώθηκαν {size} GB",
+  "{icon} Already downloaded": "{icon} Έχει ήδη ληφθεί"
 }

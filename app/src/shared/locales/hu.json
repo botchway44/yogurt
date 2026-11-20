@@ -735,5 +735,6 @@
   "{size} GB used by models you are not using": "{size} GB-ot foglalnak a nem használt modellek",
   "Delete unused models": "Nem használt modellek törlése",
   "Delete {size} GB": "{size} GB törlése",
-  "Freed {size} GB": "{size} GB felszabadítva"
+  "Freed {size} GB": "{size} GB felszabadítva",
+  "{icon} Already downloaded": "{icon} Már letöltve"
 }

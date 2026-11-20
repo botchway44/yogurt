@@ -217,3 +217,29 @@ describe('deleting the notes models nothing uses', () => {
     expect(existsSync(c.notesPath()!)).toBe(true)
   })
 })
+
+describe('which notes models are already downloaded', () => {
+  const downloaded = async (c: SetupController) => (await c.notesModelOptions()).filter((m) => m.downloaded).map((m) => m.id).sort()
+
+  it('marks the models whose file is on this computer, and nothing else', async () => {
+    const { c } = setup(recorder())
+    await c.start(); await c.idle()
+    // Automatic fetched the starter first, then the bigger one
+    expect(await downloaded(c)).toEqual(['gemma-4-26b-a4b', 'gemma-4-e4b'])
+    await c.switchNotesModel(OTHER)
+    expect(await downloaded(c)).toEqual(['gemma-4-26b-a4b', 'gemma-4-e4b', OTHER].sort())
+  })
+
+  it('stops marking a model once its file is deleted', async () => {
+    const { c } = setup(recorder())
+    await c.start(); await c.idle()
+    await c.switchNotesModel(OTHER)
+    c.deleteUnusedNotesModels()
+    expect(await downloaded(c)).toEqual([OTHER])
+  })
+
+  it('marks nothing before anything has been downloaded', async () => {
+    const { c } = setup(recorder())
+    expect(await downloaded(c)).toEqual([])
+  })
+})

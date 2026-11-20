@@ -108,7 +108,10 @@ export class SetupController {
     return catalog.models.map((m) => {
       const fit = pickModel(hw, catalog.models, m.id)
       const smallest = Math.min(...m.builds.map((b) => b.sizeGB))
-      return { id: m.id, name: m.name, sizeGB: fit ? fit.build.sizeGB : smallest, fits: fit !== null }
+      // the build this computer would use is on disk and verified (any build of a model that does not fit: it cannot be used anyway)
+      const dir = join(this.deps.modelsDir, 'llm')
+      const downloaded = (fit ? [fit.build] : m.builds).some((b) => isVerified(dir, fileNameFor(b.url), this.deps.sha256Override ?? b.sha256))
+      return { id: m.id, name: m.name, sizeGB: fit ? fit.build.sizeGB : smallest, fits: fit !== null, downloaded }
     })
   }
 

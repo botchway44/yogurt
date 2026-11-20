@@ -27,8 +27,8 @@ export type SummaryCompare = { current: { text: string; model: string }; earlier
 /** notes models on this computer that nothing uses: how many, and the space they take */
 export type UnusedModels = { count: number; bytes: number }
 
-/** one notes model in Settings' picker; fits: this computer has the memory for it */
-export type NotesModelOption = { id: string; name: string; sizeGB: number; fits: boolean }
+/** one notes model in Settings' picker; fits: this computer has the memory for it; downloaded: its file is already here (picking it is instant) */
+export type NotesModelOption = { id: string; name: string; sizeGB: number; fits: boolean; downloaded: boolean }
 
 export type Theme = 'light' | 'dark' | 'system'
 export type AppVisibility = 'both' | 'menu-bar' | 'dock'

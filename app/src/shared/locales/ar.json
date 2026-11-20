@@ -803,5 +803,6 @@
   "{size} GB used by models you are not using": "{size} غيغابايت تشغلها نماذج لا تستخدمها",
   "Delete unused models": "حذف النماذج غير المستخدمة",
   "Delete {size} GB": "حذف {size} غيغابايت",
-  "Freed {size} GB": "تم تحرير {size} غيغابايت"
+  "Freed {size} GB": "تم تحرير {size} غيغابايت",
+  "{icon} Already downloaded": "{icon} تم تنزيله بالفعل"
 }

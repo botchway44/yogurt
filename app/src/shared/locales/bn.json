@@ -735,5 +735,6 @@
   "{size} GB used by models you are not using": "আপনি ব্যবহার করছেন না এমন মডেলে {size} GB জায়গা লাগছে",
   "Delete unused models": "অব্যবহৃত মডেল মুছুন",
   "Delete {size} GB": "{size} GB মুছুন",
-  "Freed {size} GB": "{size} GB খালি হয়েছে"
+  "Freed {size} GB": "{size} GB খালি হয়েছে",
+  "{icon} Already downloaded": "{icon} ইতিমধ্যে ডাউনলোড করা হয়েছে"
 }

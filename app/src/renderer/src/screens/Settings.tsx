@@ -276,6 +276,9 @@ function SummaryLanguage() {
   )
 }
 
+/** a down arrow to a bar: marks a notes model that is already on this computer (a native dropdown can only show text, and the system font has this one) */
+const DOWNLOADED_ICON = '\u2913'
+
 /**
  * Which notes model writes the summaries: Yogurt's pick for this computer, or one the person chose. A pick downloads right
  * away, with its progress here, and the notes switch to it by themselves when it is in (no restart).
@@ -317,6 +320,7 @@ function NotesModelPicker() {
       <div className="settings-row-copy">
         <label htmlFor="settings-notes-model" className="settings-label">{t('Notes model')}</label>
         <p id="settings-notes-model-description" className="settings-description">{t('Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.')}</p>
+        {models.some((m) => m.downloaded) && <p data-testid="notes-model-legend" className="settings-description">{t('{icon} Already downloaded', { icon: DOWNLOADED_ICON })}</p>}
         {sw && (sw.error
           ? <div data-testid="notes-switch" data-failed="true">
               <p role="status" className="settings-description">{sw.error}</p>
@@ -346,7 +350,7 @@ function NotesModelPicker() {
       <span className="settings-select-wrap">
         <select id="settings-notes-model" data-testid="settings-notes-model" aria-describedby="settings-notes-model-description" value={id ?? ''} disabled={id === undefined} onChange={(e) => pick(e.target.value)} className="settings-select">
           <option value="">{t('Automatic, the best for this computer')}</option>
-          {models.map((m) => <option key={m.id} value={m.id} disabled={!m.fits}>{`${m.name} · ${m.sizeGB.toFixed(1)} GB${m.fits ? '' : ` · ${t('needs more memory')}`}`}</option>)}
+          {models.map((m) => <option key={m.id} value={m.id} disabled={!m.fits}>{`${m.name} · ${m.sizeGB.toFixed(1)} GB${m.fits ? '' : ` · ${t('needs more memory')}`}${m.downloaded ? ` · ${DOWNLOADED_ICON}` : ''}`}</option>)}
         </select>
         <ChevronDown size={14} aria-hidden="true" />
       </span>

@@ -705,5 +705,6 @@
   "{size} GB used by models you are not using": "未使用的模型佔用了 {size} GB",
   "Delete unused models": "刪除未使用的模型",
   "Delete {size} GB": "刪除 {size} GB",
-  "Freed {size} GB": "已釋放 {size} GB"
+  "Freed {size} GB": "已釋放 {size} GB",
+  "{icon} Already downloaded": "{icon} 已下載"
 }

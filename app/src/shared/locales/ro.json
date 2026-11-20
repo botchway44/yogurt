@@ -764,5 +764,6 @@
   "{size} GB used by models you are not using": "{size} GB ocupați de modele pe care nu le folosești",
   "Delete unused models": "Șterge modelele nefolosite",
   "Delete {size} GB": "Șterge {size} GB",
-  "Freed {size} GB": "{size} GB eliberați"
+  "Freed {size} GB": "{size} GB eliberați",
+  "{icon} Already downloaded": "{icon} Deja descărcat"
 }

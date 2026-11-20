@@ -705,5 +705,6 @@
   "{size} GB used by models you are not using": "โมเดลที่คุณไม่ได้ใช้กินพื้นที่ {size} GB",
   "Delete unused models": "ลบโมเดลที่ไม่ได้ใช้",
   "Delete {size} GB": "ลบ {size} GB",
-  "Freed {size} GB": "คืนพื้นที่ {size} GB แล้ว"
+  "Freed {size} GB": "คืนพื้นที่ {size} GB แล้ว",
+  "{icon} Already downloaded": "{icon} ดาวน์โหลดแล้ว"
 }

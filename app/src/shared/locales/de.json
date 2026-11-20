@@ -747,5 +747,6 @@
   "{size} GB used by models you are not using": "{size} GB belegt von Modellen, die Sie nicht verwenden",
   "Delete unused models": "Nicht verwendete Modelle löschen",
   "Delete {size} GB": "{size} GB löschen",
-  "Freed {size} GB": "{size} GB freigegeben"
+  "Freed {size} GB": "{size} GB freigegeben",
+  "{icon} Already downloaded": "{icon} Bereits heruntergeladen"
 }

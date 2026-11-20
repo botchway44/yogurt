@@ -775,5 +775,6 @@
   "{size} GB used by models you are not using": "{size} ГБ занимают модели, которыми вы не пользуетесь",
   "Delete unused models": "Удалить неиспользуемые модели",
   "Delete {size} GB": "Удалить {size} ГБ",
-  "Freed {size} GB": "Освобождено {size} ГБ"
+  "Freed {size} GB": "Освобождено {size} ГБ",
+  "{icon} Already downloaded": "{icon} Уже загружено"
 }
