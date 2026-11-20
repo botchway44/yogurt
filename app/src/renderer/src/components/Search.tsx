@@ -1,3 +1,4 @@
+import { InlineError } from './InlineError'
 import { Dialog } from '@animate-ui/react/primitives/base-ui/dialog'
 import { MotionPopup } from './MotionPopup'
 import { motion } from '../motion'
@@ -60,6 +61,8 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
     const off = window.yogurt.meetings.onChange(load)
     return () => { live = false; off() }
   }, [])
+  const [queryFailed, setQueryFailed] = useState(false)
+  const retry = useRef<() => void>(() => {})
   const seq = useRef(0)
   const list = useRef<HTMLUListElement>(null)
   const scrollSelection = useRef(false)
@@ -71,12 +74,16 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
   }
 
   useEffect(() => {
-    const mine = ++seq.current
-    const run = () => void window.yogurt.search.query(q, scope?.id, selectedPeople).then((list) => {
-      // an answer to an older question never replaces a newer one
-      if (mine !== seq.current) return
-      setResults({ q, scopeId: scope?.id, peopleKey, list }); setActive(null)
-    })
+    ++seq.current
+    setQueryFailed(false)
+    const run = () => {
+      const request = ++seq.current
+      void window.yogurt.search.query(q, scope?.id, selectedPeople).then(list => {
+        if (request !== seq.current) return
+        setQueryFailed(false); setResults({ q, scopeId: scope?.id, peopleKey, list }); setActive(null)
+      }, () => { if (request === seq.current) setQueryFailed(true) })
+    }
+    retry.current = run
     if (!q.trim()) { run(); return }
     const timer = setTimeout(run, DEBOUNCE_MS)
     return () => clearTimeout(timer)
@@ -181,6 +188,7 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
   const enter = () => {
     if (selected?.kind === 'person') { pickPerson(selected); return }
     if (selected?.kind === 'ask' && active !== null) { void ask(selected.query); return }
+    if (queryFailed && q.trim()) { void ask(q.trim()); return }
     if (settled) {
       if (selected?.kind === 'ask') void ask(selected.query)
       else if (selected?.kind === 'meeting') onOpen(selected.meeting.meetingId)
@@ -195,8 +203,8 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
       if (first?.kind === 'ask') void ask(first.query)
       else if (first?.kind === 'meeting') onOpen(first.meeting.meetingId)
       else if (first?.kind === 'command') void runCommand(first.command)
-      else { setResults({ q, scopeId: scope?.id, peopleKey, list }); setActive(null) }
-    })
+      else { setQueryFailed(false); setResults({ q, scopeId: scope?.id, peopleKey, list }); setActive(null) }
+    }).catch(() => { if (mine === seq.current) setQueryFailed(true) })
   }
 
   return (
@@ -236,7 +244,12 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
             </span>}
           </div>}
         </div>
-        <ul ref={list} id="search-results" role="listbox" aria-label={t('Results')} aria-busy={running || !settled} className="min-h-0 flex-1 overflow-y-auto [overflow-anchor:none] px-2 pb-2">
+        {queryFailed && <InlineError testId="search-read-error"><span>{t("Couldn't load this content.")}</span>
+          <button type="button" data-testid="search-retry" className="workspace-button" onClick={() => retry.current()}>{t('Try again')}</button>
+          {!!q.trim() && <button type="button" className="workspace-button" onClick={() => void ask(q.trim())}>{t('Ask')}</button>}
+        </InlineError>}
+        {queryFailed && results && <p className="px-5 text-xs text-muted">{t('Previous results')}{typed && ' · ' + typed}</p>}
+        <ul ref={list} id="search-results" role="listbox" aria-label={t('Results')} aria-busy={running || !settled && !queryFailed} className="min-h-0 flex-1 overflow-y-auto [overflow-anchor:none] px-2 pb-2">
           {rows.map((row, i) => {
             const previous = rows[i - 1]
             if (row.kind === 'ask') return <Fragment key="ask">
@@ -292,7 +305,7 @@ export function Search({ folder, folders, onOpen, onNavigate, onSettingsChange, 
         {settled && filtered && !items.length && <li role="presentation" data-testid="search-filter-empty" className="px-5 py-8 text-center text-sm text-muted">
           {searchFilterEmptyMessage(selectedPeople, dateLabel)}
         </li>}
-        {results && !count && !filtered && (
+        {!queryFailed && results && !count && !filtered && (
           <li role="presentation" data-testid="search-none" className="flex h-full items-center justify-center px-5 py-8 text-center text-sm text-muted">
             {scope ? t('No meetings in this folder yet.') : t('No notes yet.')}
           </li>

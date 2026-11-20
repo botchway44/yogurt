@@ -163,7 +163,7 @@ function DateCard({ m, details, refreshLinked, chip, motionProps, onClose }: { m
         <div className="note-date-reveal" data-ready={!!result}>
           {available && event === null && <div className="note-date-access flex items-center gap-3 text-xs text-muted">
             <p role="status">{t('Calendar event unavailable')}</p>
-            <button className="text-action ms-auto" onClick={refresh}>{t('Try again')}</button>
+            <button className="workspace-button ms-auto" onClick={refresh}>{t('Try again')}</button>
           </div>}
           {url && <div className="agenda-inspector-actions">
             <a className="workspace-button" title={t('Join meeting')} href={url} target="_blank" rel="noreferrer"><span>{t('Join meeting')}</span><ExternalLink size={12} aria-hidden="true" /></a>

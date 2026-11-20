@@ -603,3 +603,20 @@ test("a mouse's back and forward buttons move through pages like ⌘[ and ⌘]",
     await expect(page.getByTestId('chat-page')).toBeVisible()
   } finally { await app.close() }
 })
+
+test('the palette recovers from a rejected read', async () => {
+  const app = await electron.launch({ args: [join(import.meta.dirname, '../out/main/index.js')], env: { ...process.env, YOGURT_FAKE: '1', YOGURT_USER_DATA: mkdtempSync(join(tmpdir(), 'yogurt-palette-retry-')) } })
+  try {
+    const page = await app.firstWindow()
+    await expect(page.getByTestId('home')).toBeVisible()
+    await app.evaluate(({ ipcMain }) => {
+      let first = true
+      ipcMain.removeHandler('search:query')
+      ipcMain.handle('search:query', () => { if (first) { first = false; throw new Error('Read failed') }; return [] })
+    })
+    await page.keyboard.press(process.platform === 'darwin' ? 'Meta+k' : 'Control+k')
+    await page.getByTestId('search-retry').click()
+    await expect(page.getByTestId('search-retry')).toHaveCount(0)
+    await expect(page.getByRole('listbox')).toHaveAttribute('aria-busy', 'false')
+  } finally { await app.close() }
+})

@@ -18,6 +18,13 @@ type Shown = { ids: string[]; bulk?: boolean; error?: string; /** the note it wa
 let show: ((s: Shown) => void) | undefined
 export const toasts = Toast.createToastManager<{ testId?: string; actionTestId?: string }>()
 
+/** A failed action can be retried or dismissed without obscuring the working screen. */
+export function retryToast(id: string, title: string, actionTestId: string, retry: () => Promise<void>, testId = id) {
+  toasts.add({ id, title, timeout: 0, data: { testId, actionTestId },
+    actionProps: { children: t('Try again'), onClick: retry },
+  })
+}
+
 /** Confirm manual audio deletion without changing the retention preference. */
 export async function recordingDeletedToast() {
   const prefs = await window.yogurt.settings.get().catch(() => undefined)
