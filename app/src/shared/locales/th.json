@@ -694,11 +694,12 @@
   "Add a calendar by link": "เพิ่มปฏิทินด้วยลิงก์",
   "Calendars from the Mac's Calendar app appear above automatically.": "ปฏิทินจากแอปปฏิทินบน Mac จะแสดงด้านบนโดยอัตโนมัติ",
   "Notes model": "โมเดลโน้ต",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "เขียนสรุปของคุณ การเปลี่ยนแปลงจะมีผลเมื่อเปิด Yogurt ครั้งถัดไป และโมเดลที่คุณยังไม่เคยใช้จะดาวน์โหลดก่อน",
   "Automatic, the best for this computer": "อัตโนมัติ ดีที่สุดสำหรับคอมพิวเตอร์เครื่องนี้",
   "needs more memory": "ต้องใช้หน่วยความจำมากขึ้น",
   "Compare summaries": "เปรียบเทียบสรุป",
   "Current": "ปัจจุบัน",
   "Earlier version": "เวอร์ชันก่อนหน้า",
-  "Unknown model": "โมเดลที่ไม่รู้จัก"
+  "Unknown model": "โมเดลที่ไม่รู้จัก",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "ดาวน์โหลดทันทีที่เลือก แล้วสลับให้เองเมื่อพร้อม โน้ตจะใช้โมเดลปัจจุบันไปก่อนจนกว่าจะเสร็จ",
+  "Downloading {name}": "กำลังดาวน์โหลด {name}"
 }

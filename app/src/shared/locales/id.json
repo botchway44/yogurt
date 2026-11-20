@@ -694,11 +694,12 @@
   "Add a calendar by link": "Tambahkan kalender melalui tautan",
   "Calendars from the Mac's Calendar app appear above automatically.": "Kalender dari app Kalender di Mac otomatis muncul di atas.",
   "Notes model": "Model catatan",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Menulis ringkasan Anda. Perubahan berlaku saat Yogurt dimulai berikutnya, dan model yang belum pernah Anda gunakan diunduh terlebih dahulu.",
   "Automatic, the best for this computer": "Otomatis, yang terbaik untuk komputer ini",
   "needs more memory": "memerlukan lebih banyak memori",
   "Compare summaries": "Bandingkan ringkasan",
   "Current": "Saat ini",
   "Earlier version": "Versi sebelumnya",
-  "Unknown model": "Model tidak dikenal"
+  "Unknown model": "Model tidak dikenal",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Diunduh saat Anda memilihnya, lalu beralih sendiri. Catatan tetap memakai model saat ini sampai siap.",
+  "Downloading {name}": "Mengunduh {name}"
 }

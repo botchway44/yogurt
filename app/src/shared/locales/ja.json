@@ -694,11 +694,12 @@
   "Add a calendar by link": "リンクでカレンダーを追加",
   "Calendars from the Mac's Calendar app appear above automatically.": "Macのカレンダーアプリのカレンダーは上に自動で表示されます。",
   "Notes model": "ノートのモデル",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "要約を書くモデルです。変更は次回 Yogurt を起動したときに反映され、まだ使っていないモデルは先にダウンロードされます。",
   "Automatic, the best for this computer": "自動(このコンピュータに最適)",
   "needs more memory": "メモリが足りません",
   "Compare summaries": "要約を比較",
   "Current": "現在",
   "Earlier version": "以前のバージョン",
-  "Unknown model": "不明なモデル"
+  "Unknown model": "不明なモデル",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "選ぶとすぐにダウンロードされ、準備ができたら自動で切り替わります。それまでノートは今のモデルを使い続けます。",
+  "Downloading {name}": "{name} をダウンロード中"
 }

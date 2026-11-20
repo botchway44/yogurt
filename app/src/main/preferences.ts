@@ -23,6 +23,8 @@ export function hookPreferences(d: { file: string; permissions: Permissions; ask
   relaunch(): boolean
   /** the notes models in this build and whether this computer can run each (setup.ts) */
   notesModels?: () => Promise<NotesModelOption[]>
+  /** a notes model was picked ('' is Automatic) and saved: get it and switch to it (setup.ts) */
+  notesModelChosen?: (id: string) => void
   /** fake mode: a slow start, so tests see the launch screen */
   slowStartMs?: number
   /** the spoken language changed: the meeting being recorded follows it where it can */
@@ -69,6 +71,8 @@ export function hookPreferences(d: { file: string; permissions: Permissions; ask
     if (typeof v !== 'string') return
     if (v !== '' && !(await (d.notesModels?.() ?? Promise.resolve([]))).some((m) => m.id === v)) return
     updateSettings(d.file, { notesModelId: v || undefined })
+    // the pick takes effect now: it downloads (progress in Settings) and the notes switch to it when it is in
+    d.notesModelChosen?.(v)
   })
   // what the person is called in meetings (who "You" is when naming voices); blank: the Mac's full name again
   ipcMain.handle('settings:name', (_e, v: unknown) => {

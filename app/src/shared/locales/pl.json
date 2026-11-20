@@ -772,11 +772,12 @@
   "Add a calendar by link": "Dodaj kalendarz przez link",
   "Calendars from the Mac's Calendar app appear above automatically.": "Kalendarze z aplikacji Kalendarz na Macu automatycznie pojawiają się powyżej.",
   "Notes model": "Model notatek",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Pisze Twoje podsumowania. Zmiana zadziała przy następnym uruchomieniu Yogurta, a model, którego jeszcze nie używano, zostanie najpierw pobrany.",
   "Automatic, the best for this computer": "Automatycznie, najlepszy dla tego komputera",
   "needs more memory": "wymaga więcej pamięci",
   "Compare summaries": "Porównaj podsumowania",
   "Current": "Bieżące",
   "Earlier version": "Wcześniejsza wersja",
-  "Unknown model": "Nieznany model"
+  "Unknown model": "Nieznany model",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Pobiera się od razu po wyborze, a potem przełącza się samo. Do tego czasu notatki używają obecnego modelu.",
+  "Downloading {name}": "Pobieranie: {name}"
 }

@@ -2,7 +2,7 @@ import { LoadingContent } from '../components/LoadingContent'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Check, ChevronDown, Copy, Cpu, Download, ExternalLink, Globe, Lock, Upload, FileText } from 'lucide-react'
 import type { Access, AppVisibility, McpStatus, NotesModelOption, PermissionKind, PermissionStatus, SetupState, Theme, UpdateStatus } from '../../../shared/types'
-import { notesDownloadText, notesUpgradeSize } from '../notesSetup'
+import { notesDownloadText, notesPercent, notesUpgradeSize } from '../notesSetup'
 import { permissionCopy } from '../permissionCopy'
 import { LOCALES, t } from '../../../shared/i18n'
 import { onMac, osWords } from '../keys'
@@ -276,24 +276,50 @@ function SummaryLanguage() {
   )
 }
 
-/** Which notes model writes the summaries: Yogurt's pick for this computer, or one the person chose. Applies the next time Yogurt starts. */
+/**
+ * Which notes model writes the summaries: Yogurt's pick for this computer, or one the person chose. A pick downloads right
+ * away, with its progress here, and the notes switch to it by themselves when it is in (no restart).
+ */
 function NotesModelPicker() {
   const [id, setId] = useState<string>()
   const [models, setModels] = useState<NotesModelOption[]>([])
+  const [setup, setSetup] = useState<SetupState>()
   useEffect(() => {
     void window.yogurt.settings.get().then((s) => setId(s.notesModelId))
     void window.yogurt.settings.notesModels().then(setModels)
+    let current = false, active = true
+    const off = window.yogurt.setup.onState((state) => { current = true; setSetup(state) })
+    void window.yogurt.setup.state().then((state) => { if (active && !current) setSetup(state) })
+    return () => { active = false; off() }
   }, [])
   const pick = (value: string) => {
     setId(value)
     void window.yogurt.settings.setNotesModel(value)
   }
+  const sw = setup?.notesSwitch
+  const minutes = sw && !sw.error && sw.etaSec !== undefined && Number.isFinite(sw.etaSec) && sw.etaSec > 0 ? Math.max(1, Math.round(sw.etaSec / 60)) : undefined
+  const percent = sw && sw.totalBytes > 0 ? Math.floor(Math.max(0, Math.min(1, sw.fraction)) * 100) : undefined
   return (
-    <LoadingContent pending={id === undefined}><div className="settings-row">
+    <LoadingContent pending={id === undefined}><div className="settings-row" data-testid="settings-notes-model-picker">
       <span className="settings-permission-icon"><Cpu size={17} strokeWidth={1.75} aria-hidden="true" /></span>
       <div className="settings-row-copy">
         <label htmlFor="settings-notes-model" className="settings-label">{t('Notes model')}</label>
-        <p id="settings-notes-model-description" className="settings-description">{t('Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.')}</p>
+        <p id="settings-notes-model-description" className="settings-description">{t('Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.')}</p>
+        {sw && (sw.error
+          ? <div data-testid="notes-switch" data-failed="true">
+              <p role="status" className="settings-description">{sw.error}</p>
+              <button type="button" data-testid="notes-switch-retry" className="workspace-button" onClick={() => pick(id ?? '')}>{t('Try again')}</button>
+            </div>
+          : <div data-testid="notes-switch" data-model={sw.id}>
+              <div className="notes-download-readout">
+                <strong>{t('Downloading {name}', { name: sw.name })}</strong>
+                <span>{minutes ? t('about {minutes} min left', { minutes }) : percent !== undefined ? notesPercent(sw.fraction) : ''}</span>
+              </div>
+              <div className="notes-download-progress" role="progressbar" aria-label={t('Downloading {name}', { name: sw.name })} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}>
+                <span style={{ width: `${percent ?? 0}%` }} />
+              </div>
+              <p className="settings-description">{t('{done} of {total} GB', { done: notesUpgradeSize(sw.totalBytes * sw.fraction), total: notesUpgradeSize(sw.totalBytes) })}</p>
+            </div>)}
       </div>
       <span className="settings-select-wrap">
         <select id="settings-notes-model" data-testid="settings-notes-model" aria-describedby="settings-notes-model-description" value={id ?? ''} disabled={id === undefined} onChange={(e) => pick(e.target.value)} className="settings-select">

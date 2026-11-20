@@ -749,11 +749,12 @@
   "Add a calendar by link": "Añadir un calendario mediante un enlace",
   "Calendars from the Mac's Calendar app appear above automatically.": "Los calendarios de la app Calendario del Mac aparecen arriba automáticamente.",
   "Notes model": "Modelo de notas",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Escribe tus resúmenes. Un cambio se aplica la próxima vez que se inicie Yogurt, y un modelo que aún no hayas usado se descarga primero.",
   "Automatic, the best for this computer": "Automático, el mejor para este equipo",
   "needs more memory": "necesita más memoria",
   "Compare summaries": "Comparar resúmenes",
   "Current": "Actual",
   "Earlier version": "Versión anterior",
-  "Unknown model": "Modelo desconocido"
+  "Unknown model": "Modelo desconocido",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Se descarga al elegirlo y luego cambia solo. Las notas siguen usando el modelo actual hasta que esté listo.",
+  "Downloading {name}": "Descargando {name}"
 }

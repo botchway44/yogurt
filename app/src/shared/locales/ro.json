@@ -753,11 +753,12 @@
   "Add a calendar by link": "Adaugă un calendar prin link",
   "Calendars from the Mac's Calendar app appear above automatically.": "Calendarele din aplicația Calendar de pe Mac apar automat mai sus.",
   "Notes model": "Model pentru notițe",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Scrie rezumatele tale. O schimbare se aplică la următoarea pornire a Yogurt, iar un model pe care nu l-ai folosit încă se descarcă mai întâi.",
   "Automatic, the best for this computer": "Automat, cel mai bun pentru acest computer",
   "needs more memory": "necesită mai multă memorie",
   "Compare summaries": "Compară rezumatele",
   "Current": "Curent",
   "Earlier version": "Versiune anterioară",
-  "Unknown model": "Model necunoscut"
+  "Unknown model": "Model necunoscut",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Se descarcă imediat ce îl alegi, apoi trece singur la el. Notițele folosesc modelul actual până când este gata.",
+  "Downloading {name}": "Se descarcă {name}"
 }

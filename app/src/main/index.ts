@@ -502,6 +502,7 @@ app.whenReady().then(() => {
     file: join(userDataDir(), 'settings.json'), permissions, kinds: supportedKinds(caps), os: platform,
     // setup is made further down; this only runs when Settings asks, long after
     notesModels: () => setup.notesModelOptions(),
+    notesModelChosen: (id) => { void setup.switchNotesModel(id) },
     ...(calendarLinks && caps.calendarLink ? { calendarLinked: () => calendarLinks.status() === 'granted' } : {}),
     // fake mode asks the first-run questions only when a test sets the permissions
     ask: !isFake() || !!process.env.YOGURT_FAKE_PERMISSIONS,

@@ -792,11 +792,12 @@
   "Add a calendar by link": "إضافة تقويم عبر رابط",
   "Calendars from the Mac's Calendar app appear above automatically.": "تظهر تقاويم تطبيق التقويم على Mac أعلاه تلقائيًا.",
   "Notes model": "نموذج الملاحظات",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "يكتب ملخصاتك. يسري التغيير عند تشغيل Yogurt في المرة التالية، وسيتم تنزيل أي نموذج لم تستخدمه من قبل أولاً.",
   "Automatic, the best for this computer": "تلقائي، الأفضل لهذا الكمبيوتر",
   "needs more memory": "يحتاج إلى مزيد من الذاكرة",
   "Compare summaries": "مقارنة الملخصات",
   "Current": "الحالي",
   "Earlier version": "نسخة سابقة",
-  "Unknown model": "نموذج غير معروف"
+  "Unknown model": "نموذج غير معروف",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "يُنزَّل عند اختياره، ثم يتم التبديل إليه تلقائيًا. تستمر الملاحظات في استخدام النموذج الحالي حتى يجهز.",
+  "Downloading {name}": "جارٍ تنزيل {name}"
 }

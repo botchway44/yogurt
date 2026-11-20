@@ -364,6 +364,8 @@ export type SetupState = {
   notesUpgradeTotalBytes?: number
   notesUpgradeEtaSec?: number
   notesUpgradeError?: string
+  /** A notes model picked in Settings is downloading (or failed to): shown there; the current model keeps writing notes until it is in. */
+  notesSwitch?: { id: string; name: string; fraction: number; totalBytes: number; etaSec?: number; error?: string }
   /** Catalog size, present only on computers with a separate better model. */
   notesUpgradeBytes?: number
   /** The first model is ready; the embedding download is finishing before the upgrade starts. */

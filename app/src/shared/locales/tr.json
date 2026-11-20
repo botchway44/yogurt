@@ -724,11 +724,12 @@
   "Add a calendar by link": "Bağlantıyla takvim ekle",
   "Calendars from the Mac's Calendar app appear above automatically.": "Mac’in Takvim uygulamasındaki takvimler otomatik olarak yukarıda görünür.",
   "Notes model": "Not modeli",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Özetlerinizi yazar. Bir değişiklik Yogurt'un bir sonraki açılışında geçerli olur ve henüz kullanmadığınız bir model önce indirilir.",
   "Automatic, the best for this computer": "Otomatik, bu bilgisayar için en iyisi",
   "needs more memory": "daha fazla bellek gerekir",
   "Compare summaries": "Özetleri karşılaştır",
   "Current": "Geçerli",
   "Earlier version": "Önceki sürüm",
-  "Unknown model": "Bilinmeyen model"
+  "Unknown model": "Bilinmeyen model",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Seçtiğinizde indirilir, sonra kendiliğinden geçiş yapılır. Hazır olana kadar notlar mevcut modeli kullanır.",
+  "Downloading {name}": "{name} indiriliyor"
 }

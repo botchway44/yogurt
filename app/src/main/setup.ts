@@ -71,6 +71,8 @@ export class SetupController {
   private upgradeDownload: Promise<void> | undefined
   private upgradeChange: Promise<void> | undefined
   private backgroundFailed = false
+  private switchAbort: AbortController | undefined
+  private switching: Promise<void> | undefined
   private retryNotes: (() => void) | undefined
   private paths: Installed | undefined
   private notesListeners = new Set<() => void>()
@@ -108,6 +110,69 @@ export class SetupController {
       const smallest = Math.min(...m.builds.map((b) => b.sizeGB))
       return { id: m.id, name: m.name, sizeGB: fit ? fit.build.sizeGB : smallest, fits: fit !== null }
     })
+  }
+
+  /**
+   * A notes model was picked in Settings: download it now (progress in the state) and switch to it the moment it is in, with no
+   * restart: the notes engine loads whatever notesPath() names on its next job. '' is Automatic, the model Yogurt would pick for
+   * this computer. The current model keeps writing notes meanwhile, and picking again replaces a download still going.
+   * The model it replaces stays on disk. Before setup has finished there is nothing to switch: the pick applies when it runs.
+   */
+  switchNotesModel(id: string): Promise<void> {
+    this.switchAbort?.abort()
+    const abort = new AbortController()
+    this.switchAbort = abort
+    // one at a time: an abandoned download has stopped writing its file before the next one starts
+    const run = (this.switching ?? Promise.resolve()).then(() => this.doSwitch(id, abort), () => this.doSwitch(id, abort))
+    this.switching = run
+    return run
+  }
+
+  private async doSwitch(id: string, abort: AbortController) {
+    if (abort.signal.aborted || !this.paths) return
+    // what the progress and any error say the download is of (the model's name once it is known)
+    let base: { id: string; name: string; totalBytes: number } = { id, name: id, totalBytes: 0 }
+    try {
+      const [hw, catalog] = await Promise.all([this.deps.getHardware(), this.deps.getCatalog()])
+      const choice = id ? pickModel(hw, catalog.models, id) : pick(hw, catalog.models).recommended
+      if (!choice || abort.signal.aborted) return
+      const item = llmItem(join(this.deps.modelsDir, 'llm'), choice)
+      const target = join(item.dir, item.fileName)
+      base = { id: choice.model.id, name: choice.model.name, totalBytes: item.bytes }
+      if (this.notesPath() === target) { this.set({ ...this._state, notesSwitch: undefined }); return }
+      // the bigger-model flow (a download or a removal under way) is the old way of changing models: this pick replaces it
+      await this.upgradeChange
+      this.upgradeAbort?.abort()
+      await this.upgradeDownload
+      abort.signal.throwIfAborted()
+      const already = isVerified(item.dir, item.fileName, this.sha(item))
+      let shown = -1
+      if (!already) {
+        await this.checkDisk([item])
+        console.info('NOTES', `downloading the picked notes model ${item.fileName} (${(item.bytes / 1e9).toFixed(1)} GB)`)
+        this.set({ ...this._state, notesSwitch: { ...base, fraction: 0 } })
+      }
+      const path = await this.fetch(item, already ? undefined : (p) => {
+        if (abort.signal.aborted) return
+        const pct = Math.floor(p.fraction * 100)
+        if (pct === shown) return
+        shown = pct
+        this.set({ ...this._state, notesSwitch: { ...base, fraction: p.fraction, ...(p.etaSec > 0 && Number.isFinite(p.etaSec) ? { etaSec: p.etaSec } : {}) } })
+      }, abort.signal)
+      abort.signal.throwIfAborted()
+      // from here the notes use it; the bigger-model flow is over for this session
+      this.firstItem = item
+      this.backgroundItem = undefined
+      this.paths = { ...this.paths!, llm: path, recommendedLlm: undefined }
+      this.set({ ...this._state, notesSwitch: undefined, notesUpgradeBytes: undefined, notesUpgradePending: undefined, notesUpgradeDownloading: undefined, notesUpgradeFraction: undefined, notesUpgradeTotalBytes: undefined, notesUpgradeEtaSec: undefined, notesUpgradeInstalled: undefined, notesUpgradeSkipped: undefined, notesUpgradeError: undefined })
+      console.info('NOTES', `switched to the notes model ${item.fileName}`)
+    } catch (err) {
+      if (abort.signal.aborted) return
+      console.warn('the picked notes model did not download', err)
+      this.set({ ...this._state, notesSwitch: { ...base, fraction: this._state.notesSwitch?.fraction ?? 0, error: friendly(err) } })
+    } finally {
+      if (this.switchAbort === abort) this.switchAbort = undefined
+    }
   }
 
   /** The engine has disposed the old model and successfully loaded this one, inside the serial job queue. */

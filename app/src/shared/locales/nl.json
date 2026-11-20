@@ -736,11 +736,12 @@
   "Add a calendar by link": "Agenda toevoegen via een link",
   "Calendars from the Mac's Calendar app appear above automatically.": "Agenda’s uit de Agenda-app op je Mac verschijnen automatisch hierboven.",
   "Notes model": "Notitiemodel",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Schrijft je samenvattingen. Een wijziging geldt de volgende keer dat Yogurt start, en een model dat je nog niet hebt gebruikt, wordt eerst gedownload.",
   "Automatic, the best for this computer": "Automatisch, het beste voor deze computer",
   "needs more memory": "heeft meer geheugen nodig",
   "Compare summaries": "Samenvattingen vergelijken",
   "Current": "Huidig",
   "Earlier version": "Eerdere versie",
-  "Unknown model": "Onbekend model"
+  "Unknown model": "Onbekend model",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Wordt gedownload zodra je hem kiest en schakelt dan vanzelf over. Notities gebruiken het huidige model tot hij klaar is.",
+  "Downloading {name}": "{name} downloaden"
 }

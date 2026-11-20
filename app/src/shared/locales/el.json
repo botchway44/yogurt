@@ -739,11 +739,12 @@
   "Add a calendar by link": "Προσθήκη ημερολογίου μέσω συνδέσμου",
   "Calendars from the Mac's Calendar app appear above automatically.": "Τα ημερολόγια από την εφαρμογή Ημερολόγιο του Mac εμφανίζονται αυτόματα παραπάνω.",
   "Notes model": "Μοντέλο σημειώσεων",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Γράφει τις περιλήψεις σας. Μια αλλαγή ισχύει στην επόμενη εκκίνηση του Yogurt και ένα μοντέλο που δεν έχετε χρησιμοποιήσει ακόμη κατεβαίνει πρώτα.",
   "Automatic, the best for this computer": "Αυτόματα, το καλύτερο για αυτόν τον υπολογιστή",
   "needs more memory": "χρειάζεται περισσότερη μνήμη",
   "Compare summaries": "Σύγκριση περιλήψεων",
   "Current": "Τρέχουσα",
   "Earlier version": "Προηγούμενη έκδοση",
-  "Unknown model": "Άγνωστο μοντέλο"
+  "Unknown model": "Άγνωστο μοντέλο",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Κατεβαίνει μόλις το επιλέξετε και μετά γίνεται αυτόματα η αλλαγή. Οι σημειώσεις χρησιμοποιούν το τρέχον μοντέλο μέχρι να είναι έτοιμο.",
+  "Downloading {name}": "Λήψη του {name}"
 }

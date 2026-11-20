@@ -724,11 +724,12 @@
   "Add a calendar by link": "লিংক দিয়ে ক্যালেন্ডার যোগ করুন",
   "Calendars from the Mac's Calendar app appear above automatically.": "Mac-এর ক্যালেন্ডার অ্যাপের ক্যালেন্ডারগুলি উপরে স্বয়ংক্রিয়ভাবে দেখা যায়।",
   "Notes model": "নোট মডেল",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "আপনার সারসংক্ষেপ লেখে। পরিবর্তন Yogurt পরের বার চালু হলে কার্যকর হবে, এবং আগে ব্যবহার করেননি এমন মডেল আগে ডাউনলোড হবে।",
   "Automatic, the best for this computer": "স্বয়ংক্রিয়, এই কম্পিউটারের জন্য সেরা",
   "needs more memory": "আরও মেমরি দরকার",
   "Compare summaries": "সারসংক্ষেপ তুলনা করুন",
   "Current": "বর্তমান",
   "Earlier version": "আগের সংস্করণ",
-  "Unknown model": "অজানা মডেল"
+  "Unknown model": "অজানা মডেল",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "বেছে নিলেই ডাউনলোড হয়, তারপর নিজে থেকেই বদলে যায়। প্রস্তুত না হওয়া পর্যন্ত নোট বর্তমান মডেলই ব্যবহার করে।",
+  "Downloading {name}": "{name} ডাউনলোড হচ্ছে"
 }

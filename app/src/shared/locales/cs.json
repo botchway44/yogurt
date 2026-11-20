@@ -767,11 +767,12 @@
   "Add a calendar by link": "Přidat kalendář pomocí odkazu",
   "Calendars from the Mac's Calendar app appear above automatically.": "Kalendáře z aplikace Kalendář na Macu se automaticky zobrazí výše.",
   "Notes model": "Model poznámek",
-  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Píše vaše souhrny. Změna se projeví při dalším spuštění Yogurtu a model, který jste ještě nepoužili, se nejdřív stáhne.",
   "Automatic, the best for this computer": "Automaticky, nejlepší pro tento počítač",
   "needs more memory": "potřebuje více paměti",
   "Compare summaries": "Porovnat souhrny",
   "Current": "Aktuální",
   "Earlier version": "Dřívější verze",
-  "Unknown model": "Neznámý model"
+  "Unknown model": "Neznámý model",
+  "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Stáhne se hned po výběru a pak se samo přepne. Poznámky do té doby používají současný model.",
+  "Downloading {name}": "Stahuje se {name}"
 }
