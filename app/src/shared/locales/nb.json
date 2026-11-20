@@ -738,5 +738,9 @@
   "Notes model": "Notatmodell",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Skriver oppsummeringene dine. En endring gjelder neste gang Yogurt starter, og en modell du ikke har brukt ennå, lastes ned først.",
   "Automatic, the best for this computer": "Automatisk, den beste for denne datamaskinen",
-  "needs more memory": "trenger mer minne"
+  "needs more memory": "trenger mer minne",
+  "Compare summaries": "Sammenlign oppsummeringer",
+  "Current": "Gjeldende",
+  "Earlier version": "Tidligere versjon",
+  "Unknown model": "Ukjent modell"
 }

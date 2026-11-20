@@ -726,5 +726,9 @@
   "Notes model": "নোট মডেল",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "আপনার সারসংক্ষেপ লেখে। পরিবর্তন Yogurt পরের বার চালু হলে কার্যকর হবে, এবং আগে ব্যবহার করেননি এমন মডেল আগে ডাউনলোড হবে।",
   "Automatic, the best for this computer": "স্বয়ংক্রিয়, এই কম্পিউটারের জন্য সেরা",
-  "needs more memory": "আরও মেমরি দরকার"
+  "needs more memory": "আরও মেমরি দরকার",
+  "Compare summaries": "সারসংক্ষেপ তুলনা করুন",
+  "Current": "বর্তমান",
+  "Earlier version": "আগের সংস্করণ",
+  "Unknown model": "অজানা মডেল"
 }

@@ -647,6 +647,8 @@ app.whenReady().then(() => {
     ...(automatic ? { keep: endedAt => keepsRecording(loadSettings(settingsFile), endedAt) } : {}),
   })
   const notes = hookNotes({
+    // which notes model is loaded, by its file name, so a summary can say what wrote it
+    modelLabel: () => basename(setup.notesPath() ?? '').replace(/\.gguf$/i, ''),
     summarized: id => { folderSuggestions.schedule(id); void removeRecording(id, true) },
     // Windows and Linux: a note waiting while the model loads says so (a Mac shows what it always did)
     showLoading: platform !== 'darwin',
@@ -824,6 +826,8 @@ app.whenReady().then(() => {
     const instruction = rewriteNote(note)
     if (known(id) && instruction !== undefined && !transcriptionBusy(store.meeting(id)?.transcriptionState)) void notes.writeAgain(id, instruction, true)
   })
+  // the current summary beside the ones it replaced, for the side-by-side view
+  ipcMain.handle('notes:compare', (_e, id: unknown) => known(id) ? notes.compare(id) : { current: { text: '', model: '' }, earlier: [] })
   app.on('will-quit', () => engine.dispose())
   // an earlier quit or crash may have left parts unjoined: try again now
   const rejoined = rejoinInterrupted(join(userDataDir(), 'meetings'), async dir => {

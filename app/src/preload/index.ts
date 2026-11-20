@@ -126,6 +126,7 @@ const api: YogurtApi = {
     },
     keptEdits: (id) => { ipcRenderer.send('notes:kept-edits', id) },
     writeAgain: (id, note) => ipcRenderer.invoke('notes:write-again', id, note),
+    compare: (id) => ipcRenderer.invoke('notes:compare', id),
     stop: (id) => ipcRenderer.invoke('notes:stop', id),
     onChange: (cb) => {
       const on = (_e: unknown, v: NoteView) => cb(v)

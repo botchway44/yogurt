@@ -794,5 +794,9 @@
   "Notes model": "نموذج الملاحظات",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "يكتب ملخصاتك. يسري التغيير عند تشغيل Yogurt في المرة التالية، وسيتم تنزيل أي نموذج لم تستخدمه من قبل أولاً.",
   "Automatic, the best for this computer": "تلقائي، الأفضل لهذا الكمبيوتر",
-  "needs more memory": "يحتاج إلى مزيد من الذاكرة"
+  "needs more memory": "يحتاج إلى مزيد من الذاكرة",
+  "Compare summaries": "مقارنة الملخصات",
+  "Current": "الحالي",
+  "Earlier version": "نسخة سابقة",
+  "Unknown model": "نموذج غير معروف"
 }

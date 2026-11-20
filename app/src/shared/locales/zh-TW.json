@@ -696,5 +696,9 @@
   "Notes model": "筆記模型",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "用於撰寫摘要。變更會在下次啟動 Yogurt 時生效,尚未使用過的模型會先下載。",
   "Automatic, the best for this computer": "自動,最適合這台電腦",
-  "needs more memory": "需要更多記憶體"
+  "needs more memory": "需要更多記憶體",
+  "Compare summaries": "比較摘要",
+  "Current": "目前",
+  "Earlier version": "早期版本",
+  "Unknown model": "未知模型"
 }

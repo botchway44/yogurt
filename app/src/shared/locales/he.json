@@ -748,5 +748,9 @@
   "Notes model": "מודל הערות",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "כותב את הסיכומים שלך. שינוי חל בפעם הבאה ש-Yogurt מופעל, ומודל שעוד לא השתמשת בו יורד קודם.",
   "Automatic, the best for this computer": "אוטומטי, הטוב ביותר למחשב הזה",
-  "needs more memory": "דורש יותר זיכרון"
+  "needs more memory": "דורש יותר זיכרון",
+  "Compare summaries": "השוואת סיכומים",
+  "Current": "נוכחי",
+  "Earlier version": "גרסה קודמת",
+  "Unknown model": "מודל לא ידוע"
 }

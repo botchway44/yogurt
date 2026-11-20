@@ -38,6 +38,7 @@ import { SpokenMenu } from '../components/SpokenMenu'
 import { RecordingHint } from '../components/RecordingHint'
 import { FolderChip, FolderPicker, type FolderSuggestion } from '../components/FolderPicker'
 import { FolderName } from '../components/FolderDialogs'
+import { CompareSummaries } from '../components/CompareSummaries'
 import { InlineError } from '../components/InlineError'
 import { Swap, SwapText } from '../components/Swap'
 
@@ -139,6 +140,15 @@ export function Note({ id, onTitleChange, at, folderSuggestion, onSource, onResu
   const [renaming, setRenaming] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [namingFolder, setNamingFolder] = useState(false)
+  // an earlier summary was kept when this one replaced it: "Compare summaries" is offered only then
+  const [hasEarlier, setHasEarlier] = useState(false)
+  const [compareOpen, setCompareOpen] = useState(false)
+  useEffect(() => {
+    let live = true
+    setHasEarlier(false); setCompareOpen(false)
+    void window.yogurt.notes.compare(id).then((d) => { if (live) setHasEarlier(d.earlier.length > 0) }).catch(() => {})
+    return () => { live = false }
+  }, [id, notes?.enhanced])
   /** the bounded reading area holds the chat beside the current view */
   const [transcriptToolbar, setTranscriptToolbar] = useState<HTMLDivElement | null>(null)
   const [chatAnchor, setChatAnchor] = useState<HTMLDivElement | null>(null)
@@ -352,6 +362,7 @@ export function Note({ id, onTitleChange, at, folderSuggestion, onSource, onResu
       </Modal>}
       <div data-testid="note-topbar" className="note-topbar no-drag fixed end-4 top-[10px] z-[60]">
           <NoteMenu key={id} transcription={{reason:transcriptReason,run:()=>void runTranscript(true)}} generation={generation} hasSummary={hasSummary} edited={notes.edited || editedHere} rewriteOpen={rewriteOpen} setRewriteOpen={setRewriteOpen}
+            onCompare={hasEarlier ? () => setCompareOpen(true) : undefined}
             onWriteAgain={(note) => { if (!generation || generation.reason) return; pickPrimary('notes'); pick('enhanced'); void writeAgain(note) }} recording={recording} savePending={m.stopSavePending} trashed={trashed} onRename={() => setRenaming(true)} onDelete={() => { void saveAll().then((saved) => { if (!saved) return; if (trashed) setDeleting(true); else void moveToTrash(id, `/note/${id}`) }) }}
             folders={(close) => <FolderPicker testId="note-menu-folders" meetingId={id} onNew={() => { close(); setNamingFolder(true) }} />} />
       </div>
@@ -484,6 +495,7 @@ export function Note({ id, onTitleChange, at, folderSuggestion, onSource, onResu
         </footer>
       </div>
       {deleting && <DeleteNote id={id} title={m.title} onDone={() => setDeleting(false)} />}
+      {compareOpen && <CompareSummaries meetingId={id} onClose={() => setCompareOpen(false)} />}
       {namingFolder && <FolderName onDone={(made) => { setNamingFolder(false); if (made) void window.yogurt.folders.add(made.id, id) }} />}
     </div></LoadingContent>
   )

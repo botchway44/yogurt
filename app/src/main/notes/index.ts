@@ -1,7 +1,7 @@
 import { attendeeMembership as stamp } from '../../shared/people'
 import type { Meeting, Store } from '../store'
 import type { NotesModel } from './model'
-import type { NoteSaveResult, NoteSide, NoteStatus, NoteView } from '../../shared/types'
+import type { NoteSaveResult, NoteSide, NoteStatus, NoteView, SummaryCompare } from '../../shared/types'
 import { cleanTitle, enhance, languageName, titlePrompt, type Llm, type PartSummary } from './enhance'
 import { meetingWords } from '../vocab'
 import type { Queue } from './queue'
@@ -20,7 +20,9 @@ const DRAFT_EVERY_MS = 50
  * the one model queue, streamed to the window as they are written, then saved. "Write again" goes the same way.
  */
 export function hookNotes(p: {
-  store: Pick<Store, 'meeting' | 'notes' | 'setNotes' | 'writtenWith' | 'setWrittenWith' | 'segments' | 'updateMeeting' | 'unenhancedMeetings'>
+  store: Pick<Store, 'meeting' | 'notes' | 'setNotes' | 'writtenWith' | 'setWrittenWith' | 'segments' | 'updateMeeting' | 'unenhancedMeetings' | 'writtenModel' | 'setWrittenModel' | 'archiveSummary' | 'summaryVersions'>
+  /** the notes model in use, by name, for labelling summaries so two models' versions can be compared; '' when not known */
+  modelLabel?: () => string
   queue: Queue
   model: Pick<NotesModel, 'llm'> & Partial<Pick<NotesModel, 'needsLoad'>>
   /** Windows and Linux: say when the notes wait for the model to load (a Mac shows what it always did) */
@@ -137,6 +139,10 @@ export function hookNotes(p: {
       console.info('NOTES', `writing the notes of ${id}`)
       if (!quiet && p.showLoading && p.model.needsLoad?.()) set(id, 'waiting', '', undefined, 'loading')
       const llm = await p.model.llm(signal)
+      // the model that is loaded now is the one writing these notes
+      const modelLabel = p.modelLabel?.() ?? ''
+      // a summary this one replaces is kept (with its model) for the side-by-side view
+      const keepReplaced = (next: string) => { const old = p.store.notes(id).enhanced ?? ''; if (old !== next) p.store.archiveSummary(id, old, p.store.writtenModel(id)) }
       signal.throwIfAborted()
       if (!quiet && live.get(id)?.step) set(id, 'waiting')
       // a generic title (or one made from earlier notes) gets one from these notes; theirs or the calendar's never
@@ -156,8 +162,10 @@ export function hookNotes(p: {
         if (signal.aborted || live.has(id)) return
         if (now.edited || now.enhanced !== was.enhanced) { queueTitle(id); return }
         stampBefore.set(id, p.store.writtenWith(id))
+        keepReplaced(md)
         p.store.setNotes(id, { enhanced: md, edited: false })
         p.store.setWrittenWith(id, used.stamp)
+        p.store.setWrittenModel(id, modelLabel)
         p.send({ ...view(id), rewrittenFrom: was.enhanced ?? '' })
         queueTitle(id, askTitle, m.attendees)
         p.summarized?.(id)
@@ -165,8 +173,10 @@ export function hookNotes(p: {
       }
       signal.throwIfAborted()
       // the person's own notes stay as they typed them, even if they typed on while this was written
+      keepReplaced(md)
       p.store.setNotes(id, { enhanced: md, edited: false })
       p.store.setWrittenWith(id, used.stamp)
+      p.store.setWrittenModel(id, modelLabel)
       finish(m, 'done')
       queueTitle(id, askTitle, m.attendees)
       p.summarized?.(id)
@@ -329,6 +339,10 @@ export function hookNotes(p: {
       const s = live.get(id)?.status
       if (s === 'waiting' || s === 'writing') return Promise.resolve()
       return queueWrite(id, note, allowPartial)
+    },
+    /** the current summary beside the ones it replaced (newest first), for the side-by-side view */
+    compare(id: string): SummaryCompare {
+      return { current: { text: p.store.notes(id).enhanced ?? '', model: p.store.writtenModel(id) }, earlier: p.store.summaryVersions(id) }
     },
     /** at launch: meetings a quit or crash left without notes get them now, one at a time */
     recover() {

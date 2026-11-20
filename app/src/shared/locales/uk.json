@@ -766,5 +766,9 @@
   "Notes model": "Модель нотаток",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Пише ваші підсумки. Зміна набуде чинності під час наступного запуску Yogurt, а модель, якою ви ще не користувалися, спершу завантажиться.",
   "Automatic, the best for this computer": "Автоматично, найкраща для цього комп'ютера",
-  "needs more memory": "потрібно більше пам'яті"
+  "needs more memory": "потрібно більше пам'яті",
+  "Compare summaries": "Порівняти підсумки",
+  "Current": "Поточна",
+  "Earlier version": "Попередня версія",
+  "Unknown model": "Невідома модель"
 }

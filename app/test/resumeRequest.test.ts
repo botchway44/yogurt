@@ -57,7 +57,7 @@ beforeEach(() => {
   stopSummary.mockResolvedValue(undefined)
   vi.stubGlobal('window', { matchMedia: () => ({ matches: true }), yogurt: {
     meetings: { get: async () => meeting, onChange: (cb: typeof meetingChanged) => { meetingListeners.add(cb); return ()=>meetingListeners.delete(cb) }, resume, stop: vi.fn() },
-    notes: { stop: stopSummary, setMine: async (_id: string, _text: string, revision: number) => ({ revision, status: 'saved' }), get: async () => notes, onChange: (cb: typeof notesChanged) => { notesChanged = cb; return vi.fn() } },
+    notes: { compare: async () => ({ current: { text: '', model: '' }, earlier: [] }), stop: stopSummary, setMine: async (_id: string, _text: string, revision: number) => ({ revision, status: 'saved' }), get: async () => notes, onChange: (cb: typeof notesChanged) => { notesChanged = cb; return vi.fn() } },
     transcript: { get: transcriptGet, onSegment: (cb: typeof segmentChanged) => { segmentChanged = cb; return vi.fn() }, onSpeakers: (cb: typeof transcriptChanged) => { transcriptChanged = cb; return vi.fn() } },
     setup: { state: async () => ({ phase: 'ready', fraction: 1 }), onState: (cb: typeof setupChanged) => { setupChanged = cb; return vi.fn() } },
     audio: { tracks: async()=>[], onDeleted:()=>vi.fn() },

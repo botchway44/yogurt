@@ -741,5 +741,9 @@
   "Notes model": "Μοντέλο σημειώσεων",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Γράφει τις περιλήψεις σας. Μια αλλαγή ισχύει στην επόμενη εκκίνηση του Yogurt και ένα μοντέλο που δεν έχετε χρησιμοποιήσει ακόμη κατεβαίνει πρώτα.",
   "Automatic, the best for this computer": "Αυτόματα, το καλύτερο για αυτόν τον υπολογιστή",
-  "needs more memory": "χρειάζεται περισσότερη μνήμη"
+  "needs more memory": "χρειάζεται περισσότερη μνήμη",
+  "Compare summaries": "Σύγκριση περιλήψεων",
+  "Current": "Τρέχουσα",
+  "Earlier version": "Προηγούμενη έκδοση",
+  "Unknown model": "Άγνωστο μοντέλο"
 }

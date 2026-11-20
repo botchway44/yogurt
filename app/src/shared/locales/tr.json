@@ -726,5 +726,9 @@
   "Notes model": "Not modeli",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Özetlerinizi yazar. Bir değişiklik Yogurt'un bir sonraki açılışında geçerli olur ve henüz kullanmadığınız bir model önce indirilir.",
   "Automatic, the best for this computer": "Otomatik, bu bilgisayar için en iyisi",
-  "needs more memory": "daha fazla bellek gerekir"
+  "needs more memory": "daha fazla bellek gerekir",
+  "Compare summaries": "Özetleri karşılaştır",
+  "Current": "Geçerli",
+  "Earlier version": "Önceki sürüm",
+  "Unknown model": "Bilinmeyen model"
 }

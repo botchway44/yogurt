@@ -696,5 +696,9 @@
   "Notes model": "Mô hình ghi chú",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Viết bản tóm tắt của bạn. Thay đổi có hiệu lực vào lần Yogurt khởi động tiếp theo, và mô hình bạn chưa dùng sẽ được tải xuống trước.",
   "Automatic, the best for this computer": "Tự động, tốt nhất cho máy tính này",
-  "needs more memory": "cần thêm bộ nhớ"
+  "needs more memory": "cần thêm bộ nhớ",
+  "Compare summaries": "So sánh bản tóm tắt",
+  "Current": "Hiện tại",
+  "Earlier version": "Phiên bản trước",
+  "Unknown model": "Mô hình không xác định"
 }

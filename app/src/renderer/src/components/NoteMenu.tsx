@@ -1,7 +1,7 @@
 import { Tooltip } from '@base-ui/react/tooltip'
 import { usePopoverPresence } from '../motion'
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { AudioLines, ChevronRight, Ellipsis, FolderIcon, Pencil, RotateCcw, Trash2 } from 'lucide-react'
+import { AudioLines, ChevronRight, Columns2, Ellipsis, FolderIcon, Pencil, RotateCcw, Trash2 } from 'lucide-react'
 import { RegenerateForm } from './RegenerateForm'
 import { t } from '../../../shared/i18n'
 
@@ -17,8 +17,10 @@ export function summaryAction({ hasSummary, hasContent, recording, busy, downloa
 }
 
 /** The note's actions share one menu and one anchor for folders and generation. */
-export function NoteMenu({ transcription, recording, savePending, onRename, onDelete, folders, trashed, generation, hasSummary, edited, rewriteOpen, setRewriteOpen, onWriteAgain }: {
+export function NoteMenu({ transcription, recording, savePending, onRename, onDelete, folders, trashed, generation, hasSummary, edited, rewriteOpen, setRewriteOpen, onWriteAgain, onCompare }: {
   transcription?: {reason?:string;run:()=>void}
+  /** given only when an earlier summary was kept (a regeneration replaced it): opens the side-by-side view */
+  onCompare?: () => void
   recording: boolean; savePending?: boolean; onRename: () => void; onDelete: () => void; folders?: (close: () => void) => ReactNode
   /** in the Trash already: Delete is for good */
   trashed?: boolean
@@ -89,6 +91,9 @@ export function NoteMenu({ transcription, recording, savePending, onRename, onDe
               <Tooltip.Popup role="tooltip" className="rounded-md border border-line bg-float px-2 py-1 text-xs whitespace-nowrap text-ink shadow-[var(--shadow)]">{generation.reason}</Tooltip.Popup>
             </Tooltip.Positioner></Tooltip.Portal>
           </Tooltip.Root>}
+          {onCompare && <button role="menuitem" data-testid="note-compare" onClick={() => run(() => { button.current?.focus(); onCompare() })} className={`${row} whitespace-nowrap`}>
+            <Columns2 size={15} strokeWidth={1.75} aria-hidden="true" className="text-muted" />{t('Compare summaries')}
+          </button>}
           <button role="menuitem" data-testid="note-delete" disabled={recording || savePending} onClick={() => run(() => { button.current?.focus(); onDelete() })} className={`${row} text-danger`}>
             <Trash2 size={15} strokeWidth={1.75} aria-hidden="true" />
             <span className="flex flex-col">

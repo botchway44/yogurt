@@ -696,5 +696,9 @@
   "Notes model": "Model nota",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Menulis ringkasan anda. Perubahan berkuat kuasa apabila Yogurt dimulakan lain kali, dan model yang belum pernah anda gunakan dimuat turun dahulu.",
   "Automatic, the best for this computer": "Automatik, yang terbaik untuk komputer ini",
-  "needs more memory": "memerlukan lebih banyak memori"
+  "needs more memory": "memerlukan lebih banyak memori",
+  "Compare summaries": "Bandingkan ringkasan",
+  "Current": "Semasa",
+  "Earlier version": "Versi terdahulu",
+  "Unknown model": "Model tidak diketahui"
 }

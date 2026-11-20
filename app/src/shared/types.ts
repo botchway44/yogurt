@@ -19,6 +19,11 @@ export type OnboardingPlan = { intro: boolean; steps: OnboardingStep[] }
 export type MissingPermission = { kind: PermissionKind; status: Access; essential: boolean }
 export type DeleteRecordingResult = 'deleted' | 'missing' | 'recording' | 'not-transcribed' | 'kept' | 'failed'
 
+/** a summary that was replaced by a regeneration; model: the notes model file that wrote it ('' when not known) */
+export type SummaryVersion = { id: number; text: string; model: string; at: number }
+/** a meeting's current summary beside the ones it replaced, newest first, for the side-by-side view */
+export type SummaryCompare = { current: { text: string; model: string }; earlier: SummaryVersion[] }
+
 /** one notes model in Settings' picker; fits: this computer has the memory for it */
 export type NotesModelOption = { id: string; name: string; sizeGB: number; fits: boolean }
 
@@ -146,6 +151,8 @@ export type YogurtApi = {
     keptEdits(meetingId: string): void
     /** writes the enhanced notes again */
     writeAgain(meetingId: string, note?: string): Promise<void>
+    /** the current summary beside the earlier ones it replaced (newest first) */
+    compare(meetingId: string): Promise<SummaryCompare>
     stop(meetingId: string): Promise<void>
     /** status, the draft as it is written, and the saved notes; returns the way to stop listening */
     onChange(cb: (v: NoteView) => void): () => void

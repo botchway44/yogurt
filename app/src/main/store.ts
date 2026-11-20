@@ -1,4 +1,5 @@
 import type { TranscriptionState } from '../shared/transcription'
+import type { SummaryVersion } from '../shared/types'
 import { eventIds, type CalEvent } from './calendar'
 import { matchSearchPeople, searchPersonKey, uniqueSearchPeople } from '../shared/searchPeople'
 import { oneEdit, parseSearchQuery, type SearchOptions } from '../shared/searchQuery'
@@ -173,6 +174,11 @@ export class Store {
       CREATE TABLE IF NOT EXISTS notes (
         id INTEGER PRIMARY KEY AUTOINCREMENT, meeting_id TEXT NOT NULL UNIQUE REFERENCES meetings(id) ON DELETE CASCADE,
         mine TEXT NOT NULL DEFAULT '', enhanced TEXT, edited INTEGER NOT NULL DEFAULT 0);
+      -- summaries that were replaced by a regeneration, kept so two models' versions can be compared side by side
+      CREATE TABLE IF NOT EXISTS summary_versions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, meeting_id TEXT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
+        text TEXT NOT NULL, model TEXT NOT NULL DEFAULT '', created_at INTEGER NOT NULL);
+      CREATE INDEX IF NOT EXISTS summary_versions_meeting ON summary_versions(meeting_id, id);
 
       CREATE VIRTUAL TABLE IF NOT EXISTS segments_fts USING fts5(text, content='segments', content_rowid='id');
       CREATE TRIGGER IF NOT EXISTS segments_ai AFTER INSERT ON segments BEGIN
@@ -235,6 +241,8 @@ export class Store {
     }
     // who was at the meeting when its notes were written (a "names" column from voice naming is left as it is, unread)
     if (!(this.db.prepare('PRAGMA table_info(notes)').all() as Row[]).some((r) => r.name === 'written_with')) this.db.exec('ALTER TABLE notes ADD COLUMN written_with TEXT')
+    // which notes model wrote the current summary (its file name; '' when not known)
+    if (!(this.db.prepare('PRAGMA table_info(notes)').all() as Row[]).some((r) => r.name === 'written_model')) this.db.exec("ALTER TABLE notes ADD COLUMN written_model TEXT NOT NULL DEFAULT ''")
     const segmentCols = (this.db.prepare('PRAGMA table_info(segments)').all() as Row[]).map((r) => String(r.name))
     if (!segmentCols.includes('hidden')) this.db.exec('ALTER TABLE segments ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0')
     if (!segmentCols.includes('echo_confident')) {
@@ -544,6 +552,27 @@ export class Store {
   }
   setWrittenWith(meetingId: string, people: string) {
     this.db.prepare('UPDATE notes SET written_with = ? WHERE meeting_id = ?').run(people, meetingId)
+  }
+
+  /** The notes model that wrote the current summary ('' when not known: older summaries, fake mode) */
+  writtenModel(meetingId: string): string {
+    const r = this.db.prepare('SELECT written_model FROM notes WHERE meeting_id = ?').get(meetingId) as Row | undefined
+    return r?.written_model == null ? '' : String(r.written_model)
+  }
+  setWrittenModel(meetingId: string, model: string) {
+    this.db.prepare('UPDATE notes SET written_model = ? WHERE meeting_id = ?').run(model, meetingId)
+  }
+  /** Keep a summary that is about to be replaced; blank text is not a version, and neither is a repeat of the newest one. */
+  archiveSummary(meetingId: string, text: string, model: string, at = Date.now()) {
+    if (!text.trim()) return
+    const last = this.db.prepare('SELECT text FROM summary_versions WHERE meeting_id = ? ORDER BY id DESC LIMIT 1').get(meetingId) as Row | undefined
+    if (last && String(last.text) === text) return
+    this.db.prepare('INSERT INTO summary_versions (meeting_id, text, model, created_at) VALUES (?, ?, ?, ?)').run(meetingId, text, model, at)
+  }
+  /** Earlier summaries of a meeting, newest first (the current one is in notes) */
+  summaryVersions(meetingId: string): SummaryVersion[] {
+    return (this.db.prepare('SELECT id, text, model, created_at FROM summary_versions WHERE meeting_id = ? ORDER BY id DESC LIMIT 20').all(meetingId) as Row[])
+      .map((r) => ({ id: Number(r.id), text: String(r.text), model: String(r.model), at: Number(r.created_at) }))
   }
 
   /** Resume managed jobs; legacy partial recordings wait for an explicit Continue. */

@@ -757,5 +757,9 @@
   "Notes model": "Modello per gli appunti",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Scrive i tuoi riassunti. Una modifica si applica al prossimo avvio di Yogurt, e un modello che non hai ancora usato viene scaricato prima.",
   "Automatic, the best for this computer": "Automatico, il migliore per questo computer",
-  "needs more memory": "richiede più memoria"
+  "needs more memory": "richiede più memoria",
+  "Compare summaries": "Confronta i riassunti",
+  "Current": "Attuale",
+  "Earlier version": "Versione precedente",
+  "Unknown model": "Modello sconosciuto"
 }

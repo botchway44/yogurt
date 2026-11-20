@@ -769,5 +769,9 @@
   "Notes model": "Model poznámek",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Píše vaše souhrny. Změna se projeví při dalším spuštění Yogurtu a model, který jste ještě nepoužili, se nejdřív stáhne.",
   "Automatic, the best for this computer": "Automaticky, nejlepší pro tento počítač",
-  "needs more memory": "potřebuje více paměti"
+  "needs more memory": "potřebuje více paměti",
+  "Compare summaries": "Porovnat souhrny",
+  "Current": "Aktuální",
+  "Earlier version": "Dřívější verze",
+  "Unknown model": "Neznámý model"
 }

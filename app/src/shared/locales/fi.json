@@ -744,5 +744,9 @@
   "Notes model": "Muistiinpanomalli",
   "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Kirjoittaa yhteenvetosi. Muutos tulee voimaan, kun Yogurt käynnistyy seuraavan kerran, ja malli, jota et ole vielä käyttänyt, ladataan ensin.",
   "Automatic, the best for this computer": "Automaattinen, paras tälle tietokoneelle",
-  "needs more memory": "tarvitsee enemmän muistia"
+  "needs more memory": "tarvitsee enemmän muistia",
+  "Compare summaries": "Vertaa yhteenvetoja",
+  "Current": "Nykyinen",
+  "Earlier version": "Aiempi versio",
+  "Unknown model": "Tuntematon malli"
 }

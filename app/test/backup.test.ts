@@ -138,9 +138,19 @@ describe('backup merge', () => {
     expect(into.search('fine line', 10)).toEqual([])
   })
 
+  it('brings a meeting\'s earlier summaries across, with the model that wrote each and the one that wrote the current one', () => {
+    const from = fresh(), into = fresh()
+    const m = fill(from, 'Pricing', 'pricing')
+    from.archiveSummary(m.id, '## old\n- first', 'model-a', 100)
+    from.setWrittenModel(m.id, 'model-b')
+    mergeBackup(into.db, from.db)
+    expect(into.summaryVersions(m.id)).toMatchObject([{ text: '## old\n- first', model: 'model-a', at: 100 }])
+    expect(into.writtenModel(m.id)).toBe('model-b')
+  })
+
   it('knows every table that holds a meeting\'s rows, and every table is one of them', () => {
     const s = fresh()
-    expect(meetingTables(s.db).map((t) => t.table).sort()).toEqual(['chat_turns', 'folder_meetings', 'library_chunks', 'library_sources', 'notes', 'segments', 'transcription_drafts'])
+    expect(meetingTables(s.db).map((t) => t.table).sort()).toEqual(['chat_turns', 'folder_meetings', 'library_chunks', 'library_sources', 'notes', 'segments', 'summary_versions', 'transcription_drafts'])
     // a new table that is not tied to a meeting would be left out of backups: decide what a backup does with it, then list it here
     const all = (s.db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '%_fts%'").all() as Array<{ name: string }>).map((r) => r.name)
     expect(all.filter((t) => t !== 'meetings' && !meetingTables(s.db).some((m) => m.table === t)).sort()).toEqual(['conversation_turns', 'conversations', 'folders', 'own_emails', 'people'])
