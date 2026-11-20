@@ -753,5 +753,9 @@
   "Stop transcription": "Interrompi la trascrizione",
   "Audio is unavailable.": "L’audio non è disponibile.",
   "Add a calendar by link": "Aggiungi un calendario tramite link",
-  "Calendars from the Mac's Calendar app appear above automatically.": "I calendari dell’app Calendario del Mac compaiono automaticamente qui sopra."
+  "Calendars from the Mac's Calendar app appear above automatically.": "I calendari dell’app Calendario del Mac compaiono automaticamente qui sopra.",
+  "Notes model": "Modello per gli appunti",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Scrive i tuoi riassunti. Una modifica si applica al prossimo avvio di Yogurt, e un modello che non hai ancora usato viene scaricato prima.",
+  "Automatic, the best for this computer": "Automatico, il migliore per questo computer",
+  "needs more memory": "richiede più memoria"
 }

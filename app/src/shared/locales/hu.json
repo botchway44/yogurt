@@ -722,5 +722,9 @@
   "Stop transcription": "Átírás leállítása",
   "Audio is unavailable.": "A hang nem érhető el.",
   "Add a calendar by link": "Naptár hozzáadása hivatkozással",
-  "Calendars from the Mac's Calendar app appear above automatically.": "A Mac Naptár appjában lévő naptárak automatikusan megjelennek fent."
+  "Calendars from the Mac's Calendar app appear above automatically.": "A Mac Naptár appjában lévő naptárak automatikusan megjelennek fent.",
+  "Notes model": "Jegyzetmodell",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Ez írja az összefoglalóidat. A változtatás a Yogurt következő indításakor lép életbe, és egy még nem használt modell először letöltődik.",
+  "Automatic, the best for this computer": "Automatikus, a legjobb ehhez a számítógéphez",
+  "needs more memory": "több memóriát igényel"
 }

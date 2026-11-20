@@ -177,6 +177,7 @@ function createSetup(): SetupController {
       load: () => loadSettings(join(userDataDir(), 'settings.json')).notesUpgradeSkipped === true,
       save: (skipped) => { updateSettings(join(userDataDir(), 'settings.json'), { notesUpgradeSkipped: skipped }) },
     },
+    notesModelPreference: { load: () => loadSettings(join(userDataDir(), 'settings.json')).notesModelId },
     // Windows and Linux: the notes engine checks the graphics first (a Mac shares its memory with them, no check)
     getHardware: isFake() ? () => fakeHardware(platform) : async () => toHardware(await readSysInfo(userDataDir()), process.platform === 'darwin' ? undefined : await probeGpu()),
     // the one in this build: new models come with app updates
@@ -499,6 +500,8 @@ app.whenReady().then(() => {
   if (calendarLinks) setCalendarLinkSource(calendarLinks, { alongside: !caps.calendarLink })
   hookPreferences({
     file: join(userDataDir(), 'settings.json'), permissions, kinds: supportedKinds(caps), os: platform,
+    // setup is made further down; this only runs when Settings asks, long after
+    notesModels: () => setup.notesModelOptions(),
     ...(calendarLinks && caps.calendarLink ? { calendarLinked: () => calendarLinks.status() === 'granted' } : {}),
     // fake mode asks the first-run questions only when a test sets the permissions
     ask: !isFake() || !!process.env.YOGURT_FAKE_PERMISSIONS,

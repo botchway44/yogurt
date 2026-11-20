@@ -50,6 +50,16 @@ const rank = (a: Choice, b: Choice) =>
   b.model.chatScore - a.model.chatScore ||
   b.estTokPerSec - a.estTokPerSec
 
+/**
+ * The best build of ONE model the person chose, or null when no build of it fits this computer's memory.
+ * Unlike pick(), speed is not a filter: a person who picked a slow model gets it (the estimate is on the Choice).
+ */
+export function pickModel(hw: Hardware, models: CatalogModel[], id: string): Choice | null {
+  const model = models.find((m) => m.id === id)
+  if (!model) return null
+  return model.builds.map((b) => evaluate(hw, model, b)).filter((c): c is Choice => c !== null).sort(rank)[0] ?? null
+}
+
 export function pick(hw: Hardware, models: CatalogModel[], opts: { minTokPerSec?: number } = {}): PickResult {
   const minTok = opts.minTokPerSec ?? MIN_TOK_PER_SEC
   const runs = models

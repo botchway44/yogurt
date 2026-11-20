@@ -762,5 +762,9 @@
   "Stop transcription": "Зупинити транскрибування",
   "Audio is unavailable.": "Аудіо недоступне.",
   "Add a calendar by link": "Додати календар за посиланням",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Календарі з програми «Календар» на Mac автоматично з’являються вище."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Календарі з програми «Календар» на Mac автоматично з’являються вище.",
+  "Notes model": "Модель нотаток",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Пише ваші підсумки. Зміна набуде чинності під час наступного запуску Yogurt, а модель, якою ви ще не користувалися, спершу завантажиться.",
+  "Automatic, the best for this computer": "Автоматично, найкраща для цього комп'ютера",
+  "needs more memory": "потрібно більше пам'яті"
 }

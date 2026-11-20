@@ -692,5 +692,9 @@
   "Stop transcription": "停止轉錄",
   "Audio is unavailable.": "音訊無法使用。",
   "Add a calendar by link": "透過連結加入行事曆",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Mac 行事曆 App 中的行事曆會自動顯示在上方。"
+  "Calendars from the Mac's Calendar app appear above automatically.": "Mac 行事曆 App 中的行事曆會自動顯示在上方。",
+  "Notes model": "筆記模型",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "用於撰寫摘要。變更會在下次啟動 Yogurt 時生效,尚未使用過的模型會先下載。",
+  "Automatic, the best for this computer": "自動,最適合這台電腦",
+  "needs more memory": "需要更多記憶體"
 }

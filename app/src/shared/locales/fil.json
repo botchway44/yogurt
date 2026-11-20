@@ -734,5 +734,9 @@
   "Stop transcription": "Itigil ang transkripsiyon",
   "Audio is unavailable.": "Hindi available ang audio.",
   "Add a calendar by link": "Magdagdag ng kalendaryo gamit ang link",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Awtomatikong lalabas sa itaas ang mga kalendaryo mula sa Calendar app ng Mac."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Awtomatikong lalabas sa itaas ang mga kalendaryo mula sa Calendar app ng Mac.",
+  "Notes model": "Modelo ng mga tala",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Isinusulat ang iyong mga buod. Magkakabisa ang pagbabago sa susunod na pagsisimula ng Yogurt, at ida-download muna ang modelong hindi mo pa nagagamit.",
+  "Automatic, the best for this computer": "Awtomatiko, ang pinakamahusay para sa computer na ito",
+  "needs more memory": "kailangan ng mas maraming memorya"
 }

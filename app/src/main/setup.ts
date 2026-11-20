@@ -1,9 +1,9 @@
-import { asrCandidates, pick, pickAsr, pickBySpeed, speedKey, type Catalog, type CatalogAsr, type Choice, type Hardware } from '@yogurt/picker'
+import { asrCandidates, pick, pickModel, pickAsr, pickBySpeed, speedKey, type Catalog, type CatalogAsr, type Choice, type Hardware } from '@yogurt/picker'
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { setTimeout as delay } from 'node:timers/promises'
 import { ChecksumError, DiskSpaceError, ensureFile, fileNameFor, isVerified, partialDownloadGB, type DownloadDeps } from './downloader'
-import type { SetupState } from '../shared/types'
+import type { NotesModelOption, SetupState } from '../shared/types'
 import { t } from '../shared/i18n'
 import { tooSlow, tooWeak } from './localCheck'
 
@@ -30,6 +30,8 @@ export type SetupDeps = {
   /** the first notes model downloads after ready: the waits between tries when it fails (the last one repeats) */
   notesRetryMs?: number[]
   upgradePreference?: { load(): boolean; save(skipped: boolean): void }
+  /** the notes model the person picked in Settings (a catalog id); undefined: Yogurt picks for this computer */
+  notesModelPreference?: { load(): string | undefined }
   /** Windows and Linux: the speed check picks the speech model (a Mac never has it: turbo, as always) */
   speed?: SpeedDeps
 }
@@ -97,6 +99,16 @@ export class SetupController {
   installed(): Installed | undefined { return this.paths }
 
   notesPath() { return this.paths?.recommendedLlm ?? this.paths?.llm }
+
+  /** Settings' picker: every notes model in this build, and whether this computer has the memory for it (same check as startup). */
+  async notesModelOptions(): Promise<NotesModelOption[]> {
+    const [hw, catalog] = await Promise.all([this.deps.getHardware(), this.deps.getCatalog()])
+    return catalog.models.map((m) => {
+      const fit = pickModel(hw, catalog.models, m.id)
+      const smallest = Math.min(...m.builds.map((b) => b.sizeGB))
+      return { id: m.id, name: m.name, sizeGB: fit ? fit.build.sizeGB : smallest, fits: fit !== null }
+    })
+  }
 
   /** The engine has disposed the old model and successfully loaded this one, inside the serial job queue. */
   notesModelLoaded(path: string) {
@@ -200,7 +212,12 @@ export class SetupController {
     this.set({ phase: 'checking', fraction: 0 })
     try {
       const [hw, catalog] = await Promise.all([this.deps.getHardware(), this.deps.getCatalog()])
-      const llm = pick(hw, catalog.models)
+      const auto = pick(hw, catalog.models)
+      // A model picked in Settings replaces the automatic pick, and skips the starter-then-bigger sequence (no starter).
+      const wanted = this.deps.notesModelPreference?.load()
+      const chosen = wanted ? pickModel(hw, catalog.models, wanted) : null
+      if (wanted && !chosen) console.warn('NOTES', `the picked notes model ${wanted} does not fit this computer or is not in this build: using the automatic pick`)
+      const llm = chosen ? { ...auto, recommended: chosen, starter: null } : auto
       const weak = tooWeak(hw, !!llm.recommended)
       if (!llm.recommended || weak) return this.set({ phase: 'error', fraction: 0, message: weak ?? '' })
 

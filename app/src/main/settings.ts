@@ -48,6 +48,8 @@ export type Settings = { theme?: 'light' | 'dark'; language?: string; /** what t
   spoken?: Spoken
   /** the default for newly written summaries; the meeting's language when left out */
   summaryLanguage?: string
+  /** the notes model the person picked (a catalog model id); Yogurt picks the best one for this computer when left out */
+  notesModelId?: string
   /** new versions download by themselves; on unless turned off */
   autoUpdate?: boolean }
 

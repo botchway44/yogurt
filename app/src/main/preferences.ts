@@ -3,7 +3,7 @@ import { loadSettings, localeOf, recordingReminderOn, spokenSetting, stopsWhenCa
 import { systemLocale } from './locale'
 import { PERMISSION_KINDS, type PermissionKind, type Permissions } from './permissions'
 import { firstRunPlan, missing, nudge } from '../shared/onboarding'
-import type { OnboardingPlan } from '../shared/types'
+import type { NotesModelOption, OnboardingPlan } from '../shared/types'
 import { cleanJargon } from '../shared/jargon'
 import { isLocale, setLanguage } from '../shared/i18n'
 import { SPOKEN, type Spoken } from '../shared/spoken'
@@ -21,6 +21,8 @@ export const onboardingShowing = (): boolean => firstRunShowing
 export function hookPreferences(d: { file: string; permissions: Permissions; ask: boolean; setLogin(on: boolean): void; setTrayVisible(on: boolean): void; setDockVisible(on: boolean): void; loginOn(saved: boolean | undefined): boolean; /** the Mac's full name */ macName(): string
   /** quit and open again, for a permission the Mac applies only then; false when it can't now (recording) */
   relaunch(): boolean
+  /** the notes models in this build and whether this computer can run each (setup.ts) */
+  notesModels?: () => Promise<NotesModelOption[]>
   /** fake mode: a slow start, so tests see the launch screen */
   slowStartMs?: number
   /** the spoken language changed: the meeting being recorded follows it where it can */
@@ -59,7 +61,14 @@ export function hookPreferences(d: { file: string; permissions: Permissions; ask
     // what the Mac says, so a change in System Settings shows here
     // locale: every window (main, card, widget) shows the interface language
     // language: the one picked ('' is the Mac's); locale: the one in use; systemLocale: the Mac's, for the picker
-    return { theme: s.theme ?? 'system', openAtLogin: d.loginOn(s.openAtLogin), showInMenuBar: s.showInMenuBar !== false, appVisibility: !visible.showInMenuBar ? 'dock' : visible.showInDock ? 'both' : 'menu-bar', language: isLocale(s.language) ? s.language : '', locale: localeOf(s, systemLocale()), systemLocale: systemLocale(), myName: s.myName?.trim() || d.macName(), macName: d.macName(), stopWhenCallEnds: stopsWhenCallEnds(s), recordingReminder: recordingReminderOn(s), keepRecordings: s.keepRecordings !== false, jargon: cleanJargon(s.jargon), spoken: spokenSetting(s), summaryLanguage: summaryLanguageSetting(s) }
+    return { theme: s.theme ?? 'system', openAtLogin: d.loginOn(s.openAtLogin), showInMenuBar: s.showInMenuBar !== false, appVisibility: !visible.showInMenuBar ? 'dock' : visible.showInDock ? 'both' : 'menu-bar', language: isLocale(s.language) ? s.language : '', locale: localeOf(s, systemLocale()), systemLocale: systemLocale(), myName: s.myName?.trim() || d.macName(), macName: d.macName(), stopWhenCallEnds: stopsWhenCallEnds(s), recordingReminder: recordingReminderOn(s), keepRecordings: s.keepRecordings !== false, jargon: cleanJargon(s.jargon), spoken: spokenSetting(s), summaryLanguage: summaryLanguageSetting(s), notesModelId: s.notesModelId ?? '' }
+  })
+  ipcMain.handle('settings:notes-models', async () => (d.notesModels ? d.notesModels() : []))
+  // '' lets Yogurt choose; anything else must be a model in this build (an unknown id is ignored, never stored)
+  ipcMain.handle('settings:notes-model', async (_e, v: unknown) => {
+    if (typeof v !== 'string') return
+    if (v !== '' && !(await (d.notesModels?.() ?? Promise.resolve([]))).some((m) => m.id === v)) return
+    updateSettings(d.file, { notesModelId: v || undefined })
   })
   // what the person is called in meetings (who "You" is when naming voices); blank: the Mac's full name again
   ipcMain.handle('settings:name', (_e, v: unknown) => {

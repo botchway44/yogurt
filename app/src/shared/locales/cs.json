@@ -765,5 +765,9 @@
   "Stop transcription": "Zastavit přepis",
   "Audio is unavailable.": "Zvuk není k dispozici.",
   "Add a calendar by link": "Přidat kalendář pomocí odkazu",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendáře z aplikace Kalendář na Macu se automaticky zobrazí výše."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendáře z aplikace Kalendář na Macu se automaticky zobrazí výše.",
+  "Notes model": "Model poznámek",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Píše vaše souhrny. Změna se projeví při dalším spuštění Yogurtu a model, který jste ještě nepoužili, se nejdřív stáhne.",
+  "Automatic, the best for this computer": "Automaticky, nejlepší pro tento počítač",
+  "needs more memory": "potřebuje více paměti"
 }

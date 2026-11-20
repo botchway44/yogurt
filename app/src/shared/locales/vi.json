@@ -692,5 +692,9 @@
   "Stop transcription": "Dừng chép lời",
   "Audio is unavailable.": "Âm thanh không khả dụng.",
   "Add a calendar by link": "Thêm lịch bằng liên kết",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Lịch từ ứng dụng Lịch trên Mac tự động xuất hiện ở trên."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Lịch từ ứng dụng Lịch trên Mac tự động xuất hiện ở trên.",
+  "Notes model": "Mô hình ghi chú",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Viết bản tóm tắt của bạn. Thay đổi có hiệu lực vào lần Yogurt khởi động tiếp theo, và mô hình bạn chưa dùng sẽ được tải xuống trước.",
+  "Automatic, the best for this computer": "Tự động, tốt nhất cho máy tính này",
+  "needs more memory": "cần thêm bộ nhớ"
 }

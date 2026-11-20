@@ -692,5 +692,9 @@
   "Stop transcription": "หยุดถอดเสียง",
   "Audio is unavailable.": "ไม่มีเสียงให้ใช้งาน",
   "Add a calendar by link": "เพิ่มปฏิทินด้วยลิงก์",
-  "Calendars from the Mac's Calendar app appear above automatically.": "ปฏิทินจากแอปปฏิทินบน Mac จะแสดงด้านบนโดยอัตโนมัติ"
+  "Calendars from the Mac's Calendar app appear above automatically.": "ปฏิทินจากแอปปฏิทินบน Mac จะแสดงด้านบนโดยอัตโนมัติ",
+  "Notes model": "โมเดลโน้ต",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "เขียนสรุปของคุณ การเปลี่ยนแปลงจะมีผลเมื่อเปิด Yogurt ครั้งถัดไป และโมเดลที่คุณยังไม่เคยใช้จะดาวน์โหลดก่อน",
+  "Automatic, the best for this computer": "อัตโนมัติ ดีที่สุดสำหรับคอมพิวเตอร์เครื่องนี้",
+  "needs more memory": "ต้องใช้หน่วยความจำมากขึ้น"
 }

@@ -692,5 +692,9 @@
   "Stop transcription": "Hentikan transkripsi",
   "Audio is unavailable.": "Audio tidak tersedia.",
   "Add a calendar by link": "Tambah kalendar melalui pautan",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendar daripada app Kalendar pada Mac muncul di atas secara automatik."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendar daripada app Kalendar pada Mac muncul di atas secara automatik.",
+  "Notes model": "Model nota",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Menulis ringkasan anda. Perubahan berkuat kuasa apabila Yogurt dimulakan lain kali, dan model yang belum pernah anda gunakan dimuat turun dahulu.",
+  "Automatic, the best for this computer": "Automatik, yang terbaik untuk komputer ini",
+  "needs more memory": "memerlukan lebih banyak memori"
 }

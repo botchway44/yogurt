@@ -1,5 +1,5 @@
 export * from './types'
 export { bandwidthGBs } from './bandwidth'
-export { pick, MIN_TOK_PER_SEC, LITE_AGENT_SCORE } from './pick'
+export { pick, pickModel, MIN_TOK_PER_SEC, LITE_AGENT_SCORE } from './pick'
 export { CatalogSchema, validateCatalog } from './catalog-schema'
 export { asrCandidates, KEEPS_UP_RTF, pickAsr, pickBySpeed, speedKey } from './asr'

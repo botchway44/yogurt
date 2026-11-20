@@ -692,5 +692,9 @@
   "Stop transcription": "文字起こしを停止",
   "Audio is unavailable.": "音声を利用できません。",
   "Add a calendar by link": "リンクでカレンダーを追加",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Macのカレンダーアプリのカレンダーは上に自動で表示されます。"
+  "Calendars from the Mac's Calendar app appear above automatically.": "Macのカレンダーアプリのカレンダーは上に自動で表示されます。",
+  "Notes model": "ノートのモデル",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "要約を書くモデルです。変更は次回 Yogurt を起動したときに反映され、まだ使っていないモデルは先にダウンロードされます。",
+  "Automatic, the best for this computer": "自動(このコンピュータに最適)",
+  "needs more memory": "メモリが足りません"
 }

@@ -740,5 +740,9 @@
   "Stop transcription": "Pysäytä litterointi",
   "Audio is unavailable.": "Ääni ei ole saatavilla.",
   "Add a calendar by link": "Lisää kalenteri linkillä",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Macin Kalenteri-apin kalenterit näkyvät automaattisesti yllä."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Macin Kalenteri-apin kalenterit näkyvät automaattisesti yllä.",
+  "Notes model": "Muistiinpanomalli",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Kirjoittaa yhteenvetosi. Muutos tulee voimaan, kun Yogurt käynnistyy seuraavan kerran, ja malli, jota et ole vielä käyttänyt, ladataan ensin.",
+  "Automatic, the best for this computer": "Automaattinen, paras tälle tietokoneelle",
+  "needs more memory": "tarvitsee enemmän muistia"
 }

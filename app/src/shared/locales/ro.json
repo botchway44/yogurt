@@ -751,5 +751,9 @@
   "Stop transcription": "Oprește transcrierea",
   "Audio is unavailable.": "Fișierul audio nu este disponibil.",
   "Add a calendar by link": "Adaugă un calendar prin link",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Calendarele din aplicația Calendar de pe Mac apar automat mai sus."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Calendarele din aplicația Calendar de pe Mac apar automat mai sus.",
+  "Notes model": "Model pentru notițe",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Scrie rezumatele tale. O schimbare se aplică la următoarea pornire a Yogurt, iar un model pe care nu l-ai folosit încă se descarcă mai întâi.",
+  "Automatic, the best for this computer": "Automat, cel mai bun pentru acest computer",
+  "needs more memory": "necesită mai multă memorie"
 }

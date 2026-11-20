@@ -737,5 +737,9 @@
   "Stop transcription": "Διακοπή απομαγνητοφώνησης",
   "Audio is unavailable.": "Ο ήχος δεν είναι διαθέσιμος.",
   "Add a calendar by link": "Προσθήκη ημερολογίου μέσω συνδέσμου",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Τα ημερολόγια από την εφαρμογή Ημερολόγιο του Mac εμφανίζονται αυτόματα παραπάνω."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Τα ημερολόγια από την εφαρμογή Ημερολόγιο του Mac εμφανίζονται αυτόματα παραπάνω.",
+  "Notes model": "Μοντέλο σημειώσεων",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Γράφει τις περιλήψεις σας. Μια αλλαγή ισχύει στην επόμενη εκκίνηση του Yogurt και ένα μοντέλο που δεν έχετε χρησιμοποιήσει ακόμη κατεβαίνει πρώτα.",
+  "Automatic, the best for this computer": "Αυτόματα, το καλύτερο για αυτόν τον υπολογιστή",
+  "needs more memory": "χρειάζεται περισσότερη μνήμη"
 }

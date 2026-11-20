@@ -734,5 +734,9 @@
   "Stop transcription": "Stop transskription",
   "Audio is unavailable.": "Lyden er ikke tilgængelig.",
   "Add a calendar by link": "Tilføj en kalender via et link",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendere fra appen Kalender på din Mac vises automatisk ovenfor."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Kalendere fra appen Kalender på din Mac vises automatisk ovenfor.",
+  "Notes model": "Notemodel",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Skriver dine resuméer. En ændring træder i kraft, næste gang Yogurt starter, og en model, du ikke har brugt endnu, downloades først.",
+  "Automatic, the best for this computer": "Automatisk, den bedste til denne computer",
+  "needs more memory": "kræver mere hukommelse"
 }

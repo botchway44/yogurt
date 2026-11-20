@@ -1,7 +1,7 @@
 import { LoadingContent } from '../components/LoadingContent'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Check, ChevronDown, Copy, Download, ExternalLink, Globe, Lock, Upload, FileText } from 'lucide-react'
-import type { Access, AppVisibility, McpStatus, PermissionKind, PermissionStatus, SetupState, Theme, UpdateStatus } from '../../../shared/types'
+import { Check, ChevronDown, Copy, Cpu, Download, ExternalLink, Globe, Lock, Upload, FileText } from 'lucide-react'
+import type { Access, AppVisibility, McpStatus, NotesModelOption, PermissionKind, PermissionStatus, SetupState, Theme, UpdateStatus } from '../../../shared/types'
 import { notesDownloadText, notesUpgradeSize } from '../notesSetup'
 import { permissionCopy } from '../permissionCopy'
 import { LOCALES, t } from '../../../shared/i18n'
@@ -158,6 +158,7 @@ export function Settings({ revision = 0, focus }: { revision?: number; focus?: s
           <div data-testid="settings-language" className="settings-group">
             <AppLanguage />
             <SummaryLanguage />
+            <NotesModelPicker />
             <SpokenSetting />
             <Jargon />
           </div>
@@ -268,6 +269,36 @@ function SummaryLanguage() {
         <select id="settings-summary-language" data-testid="settings-summary-language" aria-describedby="settings-summary-language-description" value={language ?? ''} disabled={language === undefined} onChange={(e) => pick(e.target.value)} className="settings-select">
           <option value="">{t('Same as the meeting')}</option>
           {LOCALES.map((l) => <option key={l.id} value={l.id} lang={l.id}>{l.name}</option>)}
+        </select>
+        <ChevronDown size={14} aria-hidden="true" />
+      </span>
+    </div></LoadingContent>
+  )
+}
+
+/** Which notes model writes the summaries: Yogurt's pick for this computer, or one the person chose. Applies the next time Yogurt starts. */
+function NotesModelPicker() {
+  const [id, setId] = useState<string>()
+  const [models, setModels] = useState<NotesModelOption[]>([])
+  useEffect(() => {
+    void window.yogurt.settings.get().then((s) => setId(s.notesModelId))
+    void window.yogurt.settings.notesModels().then(setModels)
+  }, [])
+  const pick = (value: string) => {
+    setId(value)
+    void window.yogurt.settings.setNotesModel(value)
+  }
+  return (
+    <LoadingContent pending={id === undefined}><div className="settings-row">
+      <span className="settings-permission-icon"><Cpu size={17} strokeWidth={1.75} aria-hidden="true" /></span>
+      <div className="settings-row-copy">
+        <label htmlFor="settings-notes-model" className="settings-label">{t('Notes model')}</label>
+        <p id="settings-notes-model-description" className="settings-description">{t('Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.')}</p>
+      </div>
+      <span className="settings-select-wrap">
+        <select id="settings-notes-model" data-testid="settings-notes-model" aria-describedby="settings-notes-model-description" value={id ?? ''} disabled={id === undefined} onChange={(e) => pick(e.target.value)} className="settings-select">
+          <option value="">{t('Automatic, the best for this computer')}</option>
+          {models.map((m) => <option key={m.id} value={m.id} disabled={!m.fits}>{`${m.name} · ${m.sizeGB.toFixed(1)} GB${m.fits ? '' : ` · ${t('needs more memory')}`}`}</option>)}
         </select>
         <ChevronDown size={14} aria-hidden="true" />
       </span>

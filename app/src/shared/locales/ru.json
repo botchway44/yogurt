@@ -762,5 +762,9 @@
   "Stop transcription": "Остановить расшифровку",
   "Audio is unavailable.": "Аудио недоступно.",
   "Add a calendar by link": "Добавить календарь по ссылке",
-  "Calendars from the Mac's Calendar app appear above automatically.": "Календари из приложения «Календарь» на Mac автоматически отображаются выше."
+  "Calendars from the Mac's Calendar app appear above automatically.": "Календари из приложения «Календарь» на Mac автоматически отображаются выше.",
+  "Notes model": "Модель заметок",
+  "Writes your summaries. A change applies the next time Yogurt starts, and a model you have not used yet downloads first.": "Пишет ваши сводки. Изменение вступит в силу при следующем запуске Yogurt, а модель, которой вы ещё не пользовались, сначала загрузится.",
+  "Automatic, the best for this computer": "Автоматически, лучшая для этого компьютера",
+  "needs more memory": "нужно больше памяти"
 }
