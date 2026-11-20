@@ -759,5 +759,9 @@
   "Earlier version": "Versão anterior",
   "Unknown model": "Modelo desconhecido",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Baixa assim que você escolhe e depois troca sozinho. As notas continuam usando o modelo atual até ele ficar pronto.",
-  "Downloading {name}": "Baixando {name}"
+  "Downloading {name}": "Baixando {name}",
+  "{size} GB used by models you are not using": "{size} GB ocupados por modelos que você não usa",
+  "Delete unused models": "Excluir modelos não usados",
+  "Delete {size} GB": "Excluir {size} GB",
+  "Freed {size} GB": "{size} GB liberados"
 }

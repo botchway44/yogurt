@@ -746,5 +746,9 @@
   "Earlier version": "Προηγούμενη έκδοση",
   "Unknown model": "Άγνωστο μοντέλο",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Κατεβαίνει μόλις το επιλέξετε και μετά γίνεται αυτόματα η αλλαγή. Οι σημειώσεις χρησιμοποιούν το τρέχον μοντέλο μέχρι να είναι έτοιμο.",
-  "Downloading {name}": "Λήψη του {name}"
+  "Downloading {name}": "Λήψη του {name}",
+  "{size} GB used by models you are not using": "{size} GB καταλαμβάνουν μοντέλα που δεν χρησιμοποιείτε",
+  "Delete unused models": "Διαγραφή αχρησιμοποίητων μοντέλων",
+  "Delete {size} GB": "Διαγραφή {size} GB",
+  "Freed {size} GB": "Ελευθερώθηκαν {size} GB"
 }

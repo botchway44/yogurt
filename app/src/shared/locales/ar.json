@@ -799,5 +799,9 @@
   "Earlier version": "نسخة سابقة",
   "Unknown model": "نموذج غير معروف",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "يُنزَّل عند اختياره، ثم يتم التبديل إليه تلقائيًا. تستمر الملاحظات في استخدام النموذج الحالي حتى يجهز.",
-  "Downloading {name}": "جارٍ تنزيل {name}"
+  "Downloading {name}": "جارٍ تنزيل {name}",
+  "{size} GB used by models you are not using": "{size} غيغابايت تشغلها نماذج لا تستخدمها",
+  "Delete unused models": "حذف النماذج غير المستخدمة",
+  "Delete {size} GB": "حذف {size} غيغابايت",
+  "Freed {size} GB": "تم تحرير {size} غيغابايت"
 }

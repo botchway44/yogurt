@@ -701,5 +701,9 @@
   "Earlier version": "早期版本",
   "Unknown model": "未知模型",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "選取後立即下載,完成後自動切換。在此之前,筆記會繼續使用目前的模型。",
-  "Downloading {name}": "正在下載 {name}"
+  "Downloading {name}": "正在下載 {name}",
+  "{size} GB used by models you are not using": "未使用的模型佔用了 {size} GB",
+  "Delete unused models": "刪除未使用的模型",
+  "Delete {size} GB": "刪除 {size} GB",
+  "Freed {size} GB": "已釋放 {size} GB"
 }

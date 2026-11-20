@@ -701,5 +701,9 @@
   "Earlier version": "เวอร์ชันก่อนหน้า",
   "Unknown model": "โมเดลที่ไม่รู้จัก",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "ดาวน์โหลดทันทีที่เลือก แล้วสลับให้เองเมื่อพร้อม โน้ตจะใช้โมเดลปัจจุบันไปก่อนจนกว่าจะเสร็จ",
-  "Downloading {name}": "กำลังดาวน์โหลด {name}"
+  "Downloading {name}": "กำลังดาวน์โหลด {name}",
+  "{size} GB used by models you are not using": "โมเดลที่คุณไม่ได้ใช้กินพื้นที่ {size} GB",
+  "Delete unused models": "ลบโมเดลที่ไม่ได้ใช้",
+  "Delete {size} GB": "ลบ {size} GB",
+  "Freed {size} GB": "คืนพื้นที่ {size} GB แล้ว"
 }

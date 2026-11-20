@@ -1,7 +1,7 @@
 import { LoadingContent } from '../components/LoadingContent'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Check, ChevronDown, Copy, Cpu, Download, ExternalLink, Globe, Lock, Upload, FileText } from 'lucide-react'
-import type { Access, AppVisibility, McpStatus, NotesModelOption, PermissionKind, PermissionStatus, SetupState, Theme, UpdateStatus } from '../../../shared/types'
+import type { Access, AppVisibility, McpStatus, NotesModelOption, PermissionKind, PermissionStatus, SetupState, Theme, UnusedModels, UpdateStatus } from '../../../shared/types'
 import { notesDownloadText, notesPercent, notesUpgradeSize } from '../notesSetup'
 import { permissionCopy } from '../permissionCopy'
 import { LOCALES, t } from '../../../shared/i18n'
@@ -284,6 +284,11 @@ function NotesModelPicker() {
   const [id, setId] = useState<string>()
   const [models, setModels] = useState<NotesModelOption[]>([])
   const [setup, setSetup] = useState<SetupState>()
+  // models downloaded earlier that nothing uses now: offered for deleting, with a confirm
+  const [unused, setUnused] = useState<UnusedModels>({ count: 0, bytes: 0 })
+  const [confirming, setConfirming] = useState(false)
+  const [freed, setFreed] = useState<number>()
+  const refreshUnused = () => void window.yogurt.settings.unusedNotesModels().then(setUnused)
   useEffect(() => {
     void window.yogurt.settings.get().then((s) => setId(s.notesModelId))
     void window.yogurt.settings.notesModels().then(setModels)
@@ -297,6 +302,13 @@ function NotesModelPicker() {
     void window.yogurt.settings.setNotesModel(value)
   }
   const sw = setup?.notesSwitch
+  // a download starts or ends: what is unused changes (nothing is offered while one is going)
+  useEffect(() => { setConfirming(false); refreshUnused() }, [!!sw])
+  const removeUnused = async () => {
+    setConfirming(false)
+    setFreed(await window.yogurt.settings.deleteUnusedNotesModels())
+    refreshUnused()
+  }
   const minutes = sw && !sw.error && sw.etaSec !== undefined && Number.isFinite(sw.etaSec) && sw.etaSec > 0 ? Math.max(1, Math.round(sw.etaSec / 60)) : undefined
   const percent = sw && sw.totalBytes > 0 ? Math.floor(Math.max(0, Math.min(1, sw.fraction)) * 100) : undefined
   return (
@@ -320,6 +332,16 @@ function NotesModelPicker() {
               </div>
               <p className="settings-description">{t('{done} of {total} GB', { done: notesUpgradeSize(sw.totalBytes * sw.fraction), total: notesUpgradeSize(sw.totalBytes) })}</p>
             </div>)}
+        {!sw && unused.bytes > 0 && <div data-testid="unused-models">
+          <p className="settings-description">{t('{size} GB used by models you are not using', { size: notesUpgradeSize(unused.bytes) })}</p>
+          {confirming
+            ? <div className="mt-2 flex gap-2">
+                <button type="button" data-testid="unused-delete-yes" className="workspace-button" onClick={() => void removeUnused()}>{t('Delete {size} GB', { size: notesUpgradeSize(unused.bytes) })}</button>
+                <button type="button" data-testid="unused-delete-cancel" className="workspace-button" onClick={() => setConfirming(false)}>{t('Cancel')}</button>
+              </div>
+            : <button type="button" data-testid="unused-delete" className="workspace-button" onClick={() => { setFreed(undefined); setConfirming(true) }}>{t('Delete unused models')}</button>}
+        </div>}
+        {!sw && unused.bytes === 0 && freed !== undefined && freed > 0 && <p role="status" data-testid="unused-freed" className="settings-description">{t('Freed {size} GB', { size: notesUpgradeSize(freed) })}</p>}
       </div>
       <span className="settings-select-wrap">
         <select id="settings-notes-model" data-testid="settings-notes-model" aria-describedby="settings-notes-model-description" value={id ?? ''} disabled={id === undefined} onChange={(e) => pick(e.target.value)} className="settings-select">

@@ -760,5 +760,9 @@
   "Earlier version": "Versiune anterioară",
   "Unknown model": "Model necunoscut",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Se descarcă imediat ce îl alegi, apoi trece singur la el. Notițele folosesc modelul actual până când este gata.",
-  "Downloading {name}": "Se descarcă {name}"
+  "Downloading {name}": "Se descarcă {name}",
+  "{size} GB used by models you are not using": "{size} GB ocupați de modele pe care nu le folosești",
+  "Delete unused models": "Șterge modelele nefolosite",
+  "Delete {size} GB": "Șterge {size} GB",
+  "Freed {size} GB": "{size} GB eliberați"
 }

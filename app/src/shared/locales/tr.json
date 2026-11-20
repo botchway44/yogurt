@@ -731,5 +731,9 @@
   "Earlier version": "Önceki sürüm",
   "Unknown model": "Bilinmeyen model",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Seçtiğinizde indirilir, sonra kendiliğinden geçiş yapılır. Hazır olana kadar notlar mevcut modeli kullanır.",
-  "Downloading {name}": "{name} indiriliyor"
+  "Downloading {name}": "{name} indiriliyor",
+  "{size} GB used by models you are not using": "Kullanmadığınız modeller {size} GB yer kaplıyor",
+  "Delete unused models": "Kullanılmayan modelleri sil",
+  "Delete {size} GB": "{size} GB sil",
+  "Freed {size} GB": "{size} GB boşaltıldı"
 }

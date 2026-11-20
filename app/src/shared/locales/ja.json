@@ -701,5 +701,9 @@
   "Earlier version": "以前のバージョン",
   "Unknown model": "不明なモデル",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "選ぶとすぐにダウンロードされ、準備ができたら自動で切り替わります。それまでノートは今のモデルを使い続けます。",
-  "Downloading {name}": "{name} をダウンロード中"
+  "Downloading {name}": "{name} をダウンロード中",
+  "{size} GB used by models you are not using": "使っていないモデルが {size} GB を占めています",
+  "Delete unused models": "未使用のモデルを削除",
+  "Delete {size} GB": "{size} GB を削除",
+  "Freed {size} GB": "{size} GB を解放しました"
 }

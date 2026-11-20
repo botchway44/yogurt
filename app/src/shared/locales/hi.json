@@ -731,5 +731,9 @@
   "Earlier version": "पिछला संस्करण",
   "Unknown model": "अज्ञात मॉडल",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "चुनते ही डाउनलोड होता है, फिर अपने-आप बदल जाता है। तैयार होने तक नोट्स मौजूदा मॉडल इस्तेमाल करते रहते हैं।",
-  "Downloading {name}": "{name} डाउनलोड हो रहा है"
+  "Downloading {name}": "{name} डाउनलोड हो रहा है",
+  "{size} GB used by models you are not using": "{size} GB ऐसे मॉडल घेरे हुए हैं जिन्हें आप इस्तेमाल नहीं कर रहे",
+  "Delete unused models": "अनुपयोगी मॉडल हटाएँ",
+  "Delete {size} GB": "{size} GB हटाएँ",
+  "Freed {size} GB": "{size} GB खाली हुआ"
 }

@@ -1,6 +1,6 @@
 import { asrCandidates, pick, pickModel, pickAsr, pickBySpeed, speedKey, type Catalog, type CatalogAsr, type Choice, type Hardware } from '@yogurt/picker'
-import { rmSync } from 'node:fs'
-import { join } from 'node:path'
+import { lstatSync, readdirSync, rmSync } from 'node:fs'
+import { basename, join } from 'node:path'
 import { setTimeout as delay } from 'node:timers/promises'
 import { ChecksumError, DiskSpaceError, ensureFile, fileNameFor, isVerified, partialDownloadGB, type DownloadDeps } from './downloader'
 import type { NotesModelOption, SetupState } from '../shared/types'
@@ -173,6 +173,45 @@ export class SetupController {
     } finally {
       if (this.switchAbort === abort) this.switchAbort = undefined
     }
+  }
+
+  /**
+   * Notes models on this computer that nothing is using: .gguf files in the notes-model folder (with their .ok and .part
+   * markers) other than the one in use and the ones setup is managing. Nothing is offered until setup has run, nor while any
+   * download or change is under way (its files are not unused). Speech and search models are never listed.
+   */
+  unusedNotesModels(): { files: string[]; bytes: number } {
+    const s = this._state
+    const busy = !this.paths || s.notesSwitch || s.notesDownloading || s.notesUpgradeDownloading || s.notesUpgradePending || s.notesRestoreFraction !== undefined
+      || this.upgradeAbort || this.upgradeChange || this.switchAbort
+    if (busy) return { files: [], bytes: 0 }
+    const dir = join(this.deps.modelsDir, 'llm')
+    const name = (path: string | undefined) => path ? basename(path) : undefined
+    const keep = new Set([name(this.notesPath()), name(this.paths?.llm), name(this.paths?.recommendedLlm), this.firstItem?.fileName, this.backgroundItem?.fileName])
+    let entries: string[]
+    try { entries = readdirSync(dir) } catch { return { files: [], bytes: 0 } }
+    const files: string[] = []
+    let bytes = 0
+    // a model's name, whether it is the finished file, its .ok marker, or what is left of a download that was cancelled
+    const models = new Set(entries.map((f) => f.replace(/\.(ok|part)$/, '')).filter((f) => f.endsWith('.gguf') && !keep.has(f)))
+    for (const model of models) {
+      for (const f of [model, model + '.ok', model + '.part']) {
+        // only plain files directly in the folder: never a link or a folder
+        try {
+          const st = lstatSync(join(dir, f))
+          if (st.isFile()) { files.push(join(dir, f)); bytes += st.size }
+        } catch { /* not there */ }
+      }
+    }
+    return { files, bytes }
+  }
+
+  /** Delete what unusedNotesModels() lists, worked out again now; gives back the bytes freed. */
+  deleteUnusedNotesModels(): number {
+    const { files, bytes } = this.unusedNotesModels()
+    for (const f of files) rmSync(f, { force: true })
+    if (files.length) console.info('NOTES', `deleted ${files.length} unused notes model files (${(bytes / 1e9).toFixed(1)} GB)`)
+    return bytes
   }
 
   /** The engine has disposed the old model and successfully loaded this one, inside the serial job queue. */

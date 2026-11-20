@@ -23,6 +23,9 @@ export function hookPreferences(d: { file: string; permissions: Permissions; ask
   relaunch(): boolean
   /** the notes models in this build and whether this computer can run each (setup.ts) */
   notesModels?: () => Promise<NotesModelOption[]>
+  /** notes models on disk that nothing uses, and deleting them (setup.ts works both out itself, never from the window) */
+  unusedNotesModels?: () => { files: string[]; bytes: number }
+  deleteUnusedNotesModels?: () => number
   /** a notes model was picked ('' is Automatic) and saved: get it and switch to it (setup.ts) */
   notesModelChosen?: (id: string) => void
   /** fake mode: a slow start, so tests see the launch screen */
@@ -66,6 +69,8 @@ export function hookPreferences(d: { file: string; permissions: Permissions; ask
     return { theme: s.theme ?? 'system', openAtLogin: d.loginOn(s.openAtLogin), showInMenuBar: s.showInMenuBar !== false, appVisibility: !visible.showInMenuBar ? 'dock' : visible.showInDock ? 'both' : 'menu-bar', language: isLocale(s.language) ? s.language : '', locale: localeOf(s, systemLocale()), systemLocale: systemLocale(), myName: s.myName?.trim() || d.macName(), macName: d.macName(), stopWhenCallEnds: stopsWhenCallEnds(s), recordingReminder: recordingReminderOn(s), keepRecordings: s.keepRecordings !== false, jargon: cleanJargon(s.jargon), spoken: spokenSetting(s), summaryLanguage: summaryLanguageSetting(s), notesModelId: s.notesModelId ?? '' }
   })
   ipcMain.handle('settings:notes-models', async () => (d.notesModels ? d.notesModels() : []))
+  ipcMain.handle('settings:unused-models', () => { const u = d.unusedNotesModels?.() ?? { files: [], bytes: 0 }; return { count: new Set(u.files.map((f) => f.replace(/\.(ok|part)$/, ''))).size, bytes: u.bytes } })
+  ipcMain.handle('settings:delete-unused-models', () => d.deleteUnusedNotesModels?.() ?? 0)
   // '' lets Yogurt choose; anything else must be a model in this build (an unknown id is ignored, never stored)
   ipcMain.handle('settings:notes-model', async (_e, v: unknown) => {
     if (typeof v !== 'string') return

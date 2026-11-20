@@ -743,5 +743,9 @@
   "Earlier version": "Naunang bersyon",
   "Unknown model": "Hindi kilalang modelo",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Ida-download kapag pinili mo, at kusa itong magpapalit. Gagamitin pa rin ng mga tala ang kasalukuyang modelo hanggang handa na ito.",
-  "Downloading {name}": "Dina-download ang {name}"
+  "Downloading {name}": "Dina-download ang {name}",
+  "{size} GB used by models you are not using": "{size} GB ang ginagamit ng mga modelong hindi mo ginagamit",
+  "Delete unused models": "Tanggalin ang mga hindi nagagamit na modelo",
+  "Delete {size} GB": "Tanggalin ang {size} GB",
+  "Freed {size} GB": "Nakalaya ang {size} GB"
 }

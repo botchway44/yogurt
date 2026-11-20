@@ -1,4 +1,4 @@
-import { mkdtempSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -151,5 +151,69 @@ describe('a model picked earlier is used when Yogurt starts', () => {
     const { c, root } = setup(rec, { notesModelPreference: { load: () => 'no-such-model' } })
     await c.start(); await c.idle()
     expect(c.notesPath()).toBe(pathOf(root, 'gemma-4-26b-a4b'))
+  })
+})
+
+describe('deleting the notes models nothing uses', () => {
+  const file = (root: string, id: string) => pathOf(root, id)
+
+  it('lists and deletes the models left behind by switching, never the one in use', async () => {
+    const rec = recorder()
+    const { c, root } = setup(rec)
+    await c.start(); await c.idle()
+    await c.switchNotesModel(OTHER)
+    // the starter and the bigger model it had are both left behind now
+    const left = [file(root, 'gemma-4-e4b'), file(root, 'gemma-4-26b-a4b')]
+    for (const f of left) expect(existsSync(f)).toBe(true)
+    const unused = c.unusedNotesModels()
+    expect(unused.files.filter((f) => f.endsWith('.gguf')).sort()).toEqual(left.sort())
+    expect(unused.bytes).toBeGreaterThan(0)
+
+    const freed = c.deleteUnusedNotesModels()
+    expect(freed).toBe(unused.bytes)
+    for (const f of left) expect(existsSync(f)).toBe(false)
+    // the one in use is still there and still the active one
+    expect(existsSync(file(root, OTHER))).toBe(true)
+    expect(c.notesPath()).toBe(file(root, OTHER))
+    // nothing more to delete
+    expect(c.unusedNotesModels()).toEqual({ files: [], bytes: 0 })
+    expect(c.deleteUnusedNotesModels()).toBe(0)
+  })
+
+  it('offers nothing, and deletes nothing, while a download is going', async () => {
+    const rec = recorder({ hold: (u) => u === urlOf(OTHER) })
+    const { c, root } = setup(rec)
+    await c.start(); await c.idle()
+    const switching = c.switchNotesModel(OTHER)
+    await expect.poll(() => c.state.notesSwitch?.id).toBe(OTHER)
+    expect(c.unusedNotesModels()).toEqual({ files: [], bytes: 0 })
+    expect(c.deleteUnusedNotesModels()).toBe(0)
+    expect(existsSync(file(root, 'gemma-4-26b-a4b'))).toBe(true)
+    rec.release(); await switching
+  })
+
+  it('offers nothing before setup has run', () => {
+    const { c } = setup(recorder())
+    expect(c.unusedNotesModels()).toEqual({ files: [], bytes: 0 })
+  })
+
+  it('also clears what a cancelled download left, but only inside the notes-model folder and only model files', async () => {
+    const rec = recorder()
+    const { c, root } = setup(rec)
+    await c.start(); await c.idle()
+    const dir = join(root, 'llm')
+    writeFileSync(join(dir, 'cancelled-model.gguf.part'), 'half a model')
+    // things that are not unused notes models: a note in the same folder, and the other kinds of model
+    writeFileSync(join(dir, 'readme.txt'), 'keep me')
+    mkdirSync(join(root, 'asr'), { recursive: true }); writeFileSync(join(root, 'asr', 'speech.gguf'), 'speech')
+    mkdirSync(join(root, 'embed'), { recursive: true }); writeFileSync(join(root, 'embed', 'search.gguf'), 'search')
+
+    expect(c.unusedNotesModels().files).toContain(join(dir, 'cancelled-model.gguf.part'))
+    c.deleteUnusedNotesModels()
+    expect(existsSync(join(dir, 'cancelled-model.gguf.part'))).toBe(false)
+    expect(existsSync(join(dir, 'readme.txt'))).toBe(true)
+    expect(existsSync(join(root, 'asr', 'speech.gguf'))).toBe(true)
+    expect(existsSync(join(root, 'embed', 'search.gguf'))).toBe(true)
+    expect(existsSync(c.notesPath()!)).toBe(true)
   })
 })

@@ -701,5 +701,9 @@
   "Earlier version": "이전 버전",
   "Unknown model": "알 수 없는 모델",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "선택하면 바로 다운로드되고, 준비되면 자동으로 전환됩니다. 그동안 노트는 현재 모델을 계속 사용합니다.",
-  "Downloading {name}": "{name} 다운로드 중"
+  "Downloading {name}": "{name} 다운로드 중",
+  "{size} GB used by models you are not using": "사용하지 않는 모델이 {size} GB를 차지하고 있습니다",
+  "Delete unused models": "사용하지 않는 모델 삭제",
+  "Delete {size} GB": "{size} GB 삭제",
+  "Freed {size} GB": "{size} GB를 확보했습니다"
 }

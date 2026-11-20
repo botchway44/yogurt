@@ -250,6 +250,8 @@ const api: YogurtApi = {
     setSummaryLanguage: (id) => ipcRenderer.invoke('settings:summary-language', id),
     notesModels: () => ipcRenderer.invoke('settings:notes-models'),
     setNotesModel: (id) => ipcRenderer.invoke('settings:notes-model', id),
+    unusedNotesModels: () => ipcRenderer.invoke('settings:unused-models'),
+    deleteUnusedNotesModels: () => ipcRenderer.invoke('settings:delete-unused-models'),
     onLanguage: (cb) => { const f = (_e: unknown, locale: string) => cb(locale); ipcRenderer.on('settings:language', f); return () => { ipcRenderer.off('settings:language', f) } },
     setSpoken: (v) => ipcRenderer.invoke('settings:spoken', v),
   },

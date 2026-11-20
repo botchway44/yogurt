@@ -771,5 +771,9 @@
   "Earlier version": "Предыдущая версия",
   "Unknown model": "Неизвестная модель",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Загружается сразу после выбора, затем переключается сам. Пока он не готов, заметки используют текущую модель.",
-  "Downloading {name}": "Загрузка {name}"
+  "Downloading {name}": "Загрузка {name}",
+  "{size} GB used by models you are not using": "{size} ГБ занимают модели, которыми вы не пользуетесь",
+  "Delete unused models": "Удалить неиспользуемые модели",
+  "Delete {size} GB": "Удалить {size} ГБ",
+  "Freed {size} GB": "Освобождено {size} ГБ"
 }

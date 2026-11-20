@@ -743,5 +743,9 @@
   "Earlier version": "Eerdere versie",
   "Unknown model": "Onbekend model",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Wordt gedownload zodra je hem kiest en schakelt dan vanzelf over. Notities gebruiken het huidige model tot hij klaar is.",
-  "Downloading {name}": "{name} downloaden"
+  "Downloading {name}": "{name} downloaden",
+  "{size} GB used by models you are not using": "{size} GB in beslag genomen door modellen die je niet gebruikt",
+  "Delete unused models": "Ongebruikte modellen verwijderen",
+  "Delete {size} GB": "{size} GB verwijderen",
+  "Freed {size} GB": "{size} GB vrijgemaakt"
 }

@@ -753,5 +753,9 @@
   "Earlier version": "גרסה קודמת",
   "Unknown model": "מודל לא ידוע",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "יורד ברגע שבוחרים בו, ואז עובר אליו מעצמו. עד שיהיה מוכן, ההערות ממשיכות להשתמש במודל הנוכחי.",
-  "Downloading {name}": "מוריד את {name}"
+  "Downloading {name}": "מוריד את {name}",
+  "{size} GB used by models you are not using": "{size} GB תפוסים על ידי מודלים שאינך משתמש בהם",
+  "Delete unused models": "מחיקת מודלים שאינם בשימוש",
+  "Delete {size} GB": "מחיקת {size} GB",
+  "Freed {size} GB": "{size} GB שוחררו"
 }

@@ -743,5 +743,9 @@
   "Earlier version": "Tidligere version",
   "Unknown model": "Ukendt model",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Downloades, når du vælger den, og skifter så af sig selv. Noter bruger den nuværende model, indtil den er klar.",
-  "Downloading {name}": "Downloader {name}"
+  "Downloading {name}": "Downloader {name}",
+  "{size} GB used by models you are not using": "{size} GB bruges af modeller, du ikke bruger",
+  "Delete unused models": "Slet ubrugte modeller",
+  "Delete {size} GB": "Slet {size} GB",
+  "Freed {size} GB": "{size} GB frigjort"
 }

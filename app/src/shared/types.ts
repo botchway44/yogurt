@@ -24,6 +24,9 @@ export type SummaryVersion = { id: number; text: string; model: string; at: numb
 /** a meeting's current summary beside the ones it replaced, newest first, for the side-by-side view */
 export type SummaryCompare = { current: { text: string; model: string }; earlier: SummaryVersion[] }
 
+/** notes models on this computer that nothing uses: how many, and the space they take */
+export type UnusedModels = { count: number; bytes: number }
+
 /** one notes model in Settings' picker; fits: this computer has the memory for it */
 export type NotesModelOption = { id: string; name: string; sizeGB: number; fits: boolean }
 
@@ -302,6 +305,10 @@ export type YogurtApi = {
     notesModels(): Promise<NotesModelOption[]>
     /** pick the notes model ('' lets Yogurt choose); it takes effect the next time Yogurt starts */
     setNotesModel(id: string): Promise<void>
+    /** notes models downloaded earlier that nothing uses now (none while a download is under way) */
+    unusedNotesModels(): Promise<UnusedModels>
+    /** delete them; gives back the bytes freed */
+    deleteUnusedNotesModels(): Promise<number>
     /** every window hears the language change, wherever it was picked */
     onLanguage(cb: (locale: string) => void): () => void
     /** English only or Multi-language: the meeting being recorded and the next ones */

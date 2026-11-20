@@ -731,5 +731,9 @@
   "Earlier version": "Korábbi verzió",
   "Unknown model": "Ismeretlen modell",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Kiválasztáskor letöltődik, majd magától átvált. Amíg el nem készül, a jegyzetek a jelenlegi modellt használják.",
-  "Downloading {name}": "{name} letöltése"
+  "Downloading {name}": "{name} letöltése",
+  "{size} GB used by models you are not using": "{size} GB-ot foglalnak a nem használt modellek",
+  "Delete unused models": "Nem használt modellek törlése",
+  "Delete {size} GB": "{size} GB törlése",
+  "Freed {size} GB": "{size} GB felszabadítva"
 }

@@ -701,5 +701,9 @@
   "Earlier version": "Versi sebelumnya",
   "Unknown model": "Model tidak dikenal",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Diunduh saat Anda memilihnya, lalu beralih sendiri. Catatan tetap memakai model saat ini sampai siap.",
-  "Downloading {name}": "Mengunduh {name}"
+  "Downloading {name}": "Mengunduh {name}",
+  "{size} GB used by models you are not using": "{size} GB dipakai model yang tidak Anda gunakan",
+  "Delete unused models": "Hapus model yang tidak dipakai",
+  "Delete {size} GB": "Hapus {size} GB",
+  "Freed {size} GB": "{size} GB dibebaskan"
 }

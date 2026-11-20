@@ -749,5 +749,9 @@
   "Earlier version": "Aiempi versio",
   "Unknown model": "Tuntematon malli",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Latautuu heti valittaessa ja vaihtuu sitten itsestään. Muistiinpanot käyttävät nykyistä mallia, kunnes uusi on valmis.",
-  "Downloading {name}": "Ladataan {name}"
+  "Downloading {name}": "Ladataan {name}",
+  "{size} GB used by models you are not using": "{size} Gt on malleilla, joita et käytä",
+  "Delete unused models": "Poista käyttämättömät mallit",
+  "Delete {size} GB": "Poista {size} Gt",
+  "Freed {size} GB": "Vapautettu {size} Gt"
 }

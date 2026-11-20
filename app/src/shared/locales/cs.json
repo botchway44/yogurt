@@ -774,5 +774,9 @@
   "Earlier version": "Dřívější verze",
   "Unknown model": "Neznámý model",
   "Downloads when you pick it, then switches by itself. Notes keep using the current model until it is ready.": "Stáhne se hned po výběru a pak se samo přepne. Poznámky do té doby používají současný model.",
-  "Downloading {name}": "Stahuje se {name}"
+  "Downloading {name}": "Stahuje se {name}",
+  "{size} GB used by models you are not using": "{size} GB zabírají modely, které nepoužíváte",
+  "Delete unused models": "Smazat nepoužívané modely",
+  "Delete {size} GB": "Smazat {size} GB",
+  "Freed {size} GB": "Uvolněno {size} GB"
 }
