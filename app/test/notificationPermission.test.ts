@@ -37,6 +37,15 @@ it('uses the bundle and signing requirement, excluding the install path', () => 
   expect(notificationIdentity('designated => identifier "so.yogurt.app"')).toBeNull()
 })
 
+it('names an ad-hoc signed app (run from source) by its code hash, so Allow can work there', () => {
+  const adhoc = 'designated => cdhash H"9302bbb02a42bafa98d7f66cc1d97fb2da94aff5"'
+  // exactly what `codesign -d -r-` prints for the stock Electron: the requirement is commented as implicit
+  expect(notificationIdentity(`Executable=/src/Electron.app/Contents/MacOS/Electron\n# ${adhoc}\n`)).toBe(adhoc)
+  // still nothing for a malformed or empty hash
+  expect(notificationIdentity('designated => cdhash H""')).toBeNull()
+  expect(notificationIdentity('designated => cdhash H"xyz"')).toBeNull()
+})
+
 it('ignores a migrated legacy flag and records only a confirmed post for this identity', async () => {
   const { path, permission } = rig()
   saveSettings(path, { notificationsAsked: true, notificationsAskedFor: [review], myName: 'Test' })

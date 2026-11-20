@@ -7,8 +7,13 @@ import { loadSettings, updateSettings } from './settings'
 
 /** A designated requirement includes the bundle ID and signer, but no install path or build version. */
 export function notificationIdentity(output: string): string | null {
-  const requirement = output.match(/^designated => .+$/m)?.[0].trim()
-  return requirement && /identifier "[^"]+"/.test(requirement) && /certificate |anchor |cdhash /.test(requirement) ? requirement : null
+  // codesign prints an implicit requirement (an ad-hoc signature has no explicit one) with a leading "# "
+  const requirement = output.match(/^(?:# )?designated => .+$/m)?.[0].replace(/^# /, '').trim()
+  if (!requirement) return null
+  // An ad-hoc signed app, like Yogurt run from source on the stock Electron, has only its code hash. That still names this app
+  // well enough for what the key is for: remembering that it already posted a notice. It is not a security boundary.
+  if (/^designated => cdhash H"[0-9a-f]+"$/.test(requirement)) return requirement
+  return /identifier "[^"]+"/.test(requirement) && /certificate |anchor |cdhash /.test(requirement) ? requirement : null
 }
 
 /** Remember a successful post for this signed app, never a migrated profile's unscoped flag. */
