@@ -58,7 +58,7 @@ export function createAudioHandler(p: { dirOf: (id: string) => string; known: (i
     if (range === 'bad') return new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${size}` } })
     const { start, end } = range ?? { start: 0, end: size - 1 }
     const body = size ? (Readable.toWeb(createReadStream(file, { start, end })) as ReadableStream) : null
-    const headers: Record<string, string> = { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Content-Length': String(size ? end - start + 1 : 0) }
+    const headers: Record<string, string> = { 'Content-Type': type, 'Accept-Ranges': 'bytes', /* the player reads the sound through Web Audio, which needs it */ 'Access-Control-Allow-Origin': '*', 'Content-Length': String(size ? end - start + 1 : 0) }
     if (range) headers['Content-Range'] = `bytes ${start}-${end}/${size}`
     return new Response(body, { status: range ? 206 : 200, headers })
   }

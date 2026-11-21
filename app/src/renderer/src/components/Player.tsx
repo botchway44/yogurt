@@ -5,6 +5,7 @@ import { InlineError } from './InlineError'
 import { Ellipsis, Pause, Play, Trash2 } from './Icons'
 import { language, t } from '../../../shared/i18n'
 import { clock } from '../../../shared/transcript'
+import { EchoDucker, FRAME_MS } from '../../../shared/echoDuck'
 import { Swap } from './Swap'
 import { recordingDeletedToast } from './TrashToast'
 
@@ -51,6 +52,45 @@ function MeetingPlayer({ id, tracks, openTranscript, ref, onTime, onPlaying, onB
   const touched = useRef(false)
   const rateRef = useRef(rate)
   rateRef.current = rate
+  /**
+   * Playback only, both tracks and a Mac that leaked: the other side is on the mic track too, a moment late, so it plays twice.
+   * Both tracks go through Web Audio so their loudness can be read, and the mic's volume dips while it holds only that leak
+   * (shared/echoDuck.ts). Anything that goes wrong here leaves the plain player: the tracks keep playing as they were.
+   */
+  const duck = useRef<{ ctx: AudioContext; gain: GainNode; timer: number; ducker: EchoDucker } | null>(null)
+  const root = useRef<HTMLDivElement>(null)
+  /** whether the mic is dipped now, on the player itself (read by tests; nothing renders from it) */
+  const mark = (on: boolean) => root.current?.setAttribute('data-echo-dip', on ? 'on' : 'off')
+  const stopDuck = () => { const d = duck.current; if (!d) return; clearInterval(d.timer); d.gain.gain.value = 1; duck.current = null; mark(false) }
+  const startDuck = () => {
+    if (duck.current || typeof AudioContext === 'undefined') return
+    const me = els.current.me, them = els.current.them
+    if (!me || !them || broken.length) return
+    try {
+      const ctx = new AudioContext()
+      const gain = ctx.createGain()
+      const meSource = ctx.createMediaElementSource(me), themSource = ctx.createMediaElementSource(them)
+      meSource.connect(gain).connect(ctx.destination); themSource.connect(ctx.destination)
+      const level = (source: MediaElementAudioSourceNode) => { const an = ctx.createAnalyser(); an.fftSize = 2048; source.connect(an); return an }
+      const meLevel = level(meSource), themLevel = level(themSource)
+      const n = Math.round(ctx.sampleRate * FRAME_MS / 1000), buf = new Float32Array(2048)
+      const rmsOf = (an: AnalyserNode) => { an.getFloatTimeDomainData(buf); let s = 0; for (let i = buf.length - n; i < buf.length; i++) s += buf[i] * buf[i]; return Math.sqrt(s / n) }
+      const ducker = new EchoDucker()
+      const timer = window.setInterval(() => {
+        if (ctx.state !== 'running') void ctx.resume()
+        const m = els.current.me, th = els.current.them
+        // a track that went away leaves nothing to tell a leak from: the mic plays as it is
+        if (!m || !th) { gain.gain.value = 1; mark(false); return }
+        // stopped or moving: nothing is dipped, so the next play starts at full volume
+        if (m.paused || th.paused || m.seeking || th.seeking) { gain.gain.value = 1; mark(false); return }
+        const target = ducker.push(rmsOf(themLevel), rmsOf(meLevel), rateRef.current)
+        gain.gain.setTargetAtTime(target, ctx.currentTime, target < gain.gain.value ? 0.015 : 0.06)
+        mark(target < 1)
+      }, FRAME_MS)
+      duck.current = { ctx, gain, timer, ducker }
+      void ctx.resume()
+    } catch (e) { console.error('the echo dip could not start; playing the tracks as they are', e) }
+  }
 
   const all = () => shown.map((tr) => els.current[tr]).filter((a): a is HTMLAudioElement => !!a)
   const lenOf = (a: HTMLAudioElement) => (Number.isFinite(a.duration) ? a.duration : 0)
@@ -58,6 +98,7 @@ function MeetingPlayer({ id, tracks, openTranscript, ref, onTime, onPlaying, onB
   const lead = () => all().reduce<HTMLAudioElement | undefined>((a, b) => (!a || lenOf(b) > lenOf(a) ? b : a), undefined)
   const anyPlaying = () => all().some((a) => !a.paused)
   const start = (a: HTMLAudioElement) => {
+    startDuck()
     a.playbackRate = rateRef.current
     void a.play().catch((e: unknown) => { if ((e as Error)?.name !== 'AbortError') console.error('playing a track failed', e) })
   }
@@ -69,6 +110,7 @@ function MeetingPlayer({ id, tracks, openTranscript, ref, onTime, onPlaying, onB
       // a shorter side that had ended plays again once the new spot is inside it
       if (on && a.paused && s < lenOf(a)) start(a)
     }
+    duck.current?.ducker.seeked()
     setTime(s)
     touched.current = true
     onTimeRef.current?.(s * 1000, true)
@@ -89,11 +131,11 @@ function MeetingPlayer({ id, tracks, openTranscript, ref, onTime, onPlaying, onB
   useImperativeHandle(ref, () => ({ playFrom }))
   useEffect(() => { if (pendingPlayFrom.current !== undefined) playFrom(pendingPlayFrom.current) }, [broken])
 
-  useEffect(() => { for (const a of all()) a.playbackRate = rate }, [rate])
+  useEffect(() => { for (const a of all()) a.playbackRate = rate; duck.current?.ducker.speed(rate) }, [rate])
   useEffect(() => { setBroken([]); setPlaying(false); setTime(0); setDuration(0); touched.current = false }, [id])
   // another meeting, or the panel closing: stop
   // React lets go of the elements (els) before this cleanup runs, and an audio let go keeps playing: pause every one it had
-  useEffect(() => () => { for (const a of owned.current) a.pause(); owned.current.clear(); onTimeRef.current?.(null) }, [id])
+  useEffect(() => () => { for (const a of owned.current) a.pause(); owned.current.clear(); const d = duck.current; stopDuck(); void d?.ctx.close(); onTimeRef.current?.(null) }, [id])
   useEffect(() => { onPlayingRef.current?.(playing) }, [playing])
   useEffect(() => { onBusyRef.current?.(playing || menuOpen || confirm) }, [playing, menuOpen, confirm])
 
@@ -137,9 +179,9 @@ function MeetingPlayer({ id, tracks, openTranscript, ref, onTime, onPlaying, onB
     </Menu.Root>
   )
   return (
-    <div data-testid="player" className="transcript-player text-xs text-muted">
+    <div ref={root} data-testid="player" className="transcript-player text-xs text-muted">
       {shown.map((tr) => (
-        <audio key={tr} data-testid={`player-audio-${tr}`} data-track={tr} preload="metadata" src={`yogurt-audio://${id}/${tr}`}
+        <audio key={tr} data-testid={`player-audio-${tr}`} data-track={tr} preload="metadata" crossOrigin="anonymous" src={`yogurt-audio://${id}/${tr}`}
           ref={(a) => { if (a) { els.current[tr] = a; owned.current.add(a) } else delete els.current[tr] }}
           onLoadedMetadata={e => {
             const track = e.currentTarget
